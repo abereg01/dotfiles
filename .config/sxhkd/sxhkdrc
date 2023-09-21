@@ -1,0 +1,27 @@
+####### APPLICATIONS #######
+# Launch
+super + @space; {b,f,n,s,y,v}
+  {brave, \
+  firefox, \
+  nemo, \
+  signal-desktop, \
+  yubioath-desktop, \
+  st -e nvim}
+
+# Rofi
+super + d
+  sh ~/dotfiles/polybar/blocks/scripts/launcher.sh 
+
+super + shift + d 
+  sh ~/scripts/ricing/rice.sh
+
+# Powermenu
+super + q
+  sh ~/.config/polybar/blocks/scripts/powermenu.sh
+
+# sxhkd restart
+#super + Escape
+#	pkill -USR1 -x sxhkd; notify-send 'sxhkd' 'sxhkd restarted'
+
+super + x
+  betterlockscreen -l
