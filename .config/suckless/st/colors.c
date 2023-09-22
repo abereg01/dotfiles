@@ -11,4 +11,4 @@
 * ashes
 * jellybeans
 */
-#include "colorschemes/gruvbox-material.c"
+#include "colorschemes/aquarium.c"
