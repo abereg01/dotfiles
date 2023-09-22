@@ -1,5 +1,6 @@
 /*
 * available colorschemes:
+* nord
 * paradise
 * gruvbox
 * gruvbox-material
@@ -11,4 +12,4 @@
 * ashes
 * jellybeans
 */
-#include "colorschemes/aquarium.c"
+#include "colorschemes/nord.c"

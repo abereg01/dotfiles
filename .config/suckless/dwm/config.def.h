@@ -31,30 +31,30 @@ static char c000000[]                    = "#000000"; // placeholder value
 static char normfgcolor[]                = "#bbbbbb";
 static char normbgcolor[]                = "#222222";
 static char normbordercolor[]            = "#444444";
-static char normfloatcolor[]             = "#db8fd9";
+static char normfloatcolor[]             = "#3b4252";
 
 static char selfgcolor[]                 = "#eeeeee";
-static char selbgcolor[]                 = "#BF616A";
-static char selbordercolor[]             = "#BF616A";
-static char selfloatcolor[]              = "#005577";
+static char selbgcolor[]                 = "#81a1c1";
+static char selbordercolor[]             = "#81a1c1";
+static char selfloatcolor[]              = "#81a1c1";
 
 static char titlenormfgcolor[]           = "#bbbbbb";
 static char titlenormbgcolor[]           = "#222222";
 static char titlenormbordercolor[]       = "#444444";
-static char titlenormfloatcolor[]        = "#db8fd9";
+static char titlenormfloatcolor[]        = "#3b4252";
 
 static char titleselfgcolor[]            = "#eeeeee";
-static char titleselbgcolor[]            = "#005577";
-static char titleselbordercolor[]        = "#005577";
-static char titleselfloatcolor[]         = "#005577";
+static char titleselbgcolor[]            = "#3b4252";
+static char titleselbordercolor[]        = "#3b4252";
+static char titleselfloatcolor[]         = "#3b4252";
 
 static char tagsnormfgcolor[]            = "#bbbbbb";
 static char tagsnormbgcolor[]            = "#222222";
 static char tagsnormbordercolor[]        = "#444444";
-static char tagsnormfloatcolor[]         = "#db8fd9";
+static char tagsnormfloatcolor[]         = "#3b4252";
 
 static char tagsselfgcolor[]             = "#eeeeee";
-static char tagsselbgcolor[]             = "#005577";
+static char tagsselbgcolor[]             = "#81a1c1";
 static char tagsselbordercolor[]         = "#005577";
 static char tagsselfloatcolor[]          = "#005577";
 
@@ -63,10 +63,10 @@ static char hidselfgcolor[]              = "#227799";
 static char hidnormbgcolor[]             = "#222222";
 static char hidselbgcolor[]              = "#222222";
 
-static char urgfgcolor[]                 = "#bbbbbb";
+static char urgfgcolor[]                 = "#88c0d0";
 static char urgbgcolor[]                 = "#222222";
-static char urgbordercolor[]             = "#ff0000";
-static char urgfloatcolor[]              = "#db8fd9";
+static char urgbordercolor[]             = "#e5e9f0";
+static char urgfloatcolor[]              = "#88c0d0";
 
 
 static char *colors[][ColCount] = {
@@ -246,11 +246,11 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_w,          killclient,             {0} },
 //	{ MODKEY|ShiftMask,             XK_q,          quit,                   {0} },
   { MODKEY|ControlMask|ShiftMask, XK_q,          quit,                   {1} },
-//	{ MODKEY,                       XK_t,          setlayout,              {.v = &layouts[0]} },
-//	{ MODKEY,                       XK_f,          setlayout,              {.v = &layouts[1]} },
-//	{ MODKEY,                       XK_m,          setlayout,              {.v = &layouts[2]} },
-//	{ MODKEY,                       XK_space,      setlayout,              {0} },
-//	{ MODKEY|ShiftMask,             XK_space,      togglefloating,         {0} },
+  { MODKEY,                       XK_t,          setlayout,              {.v = &layouts[0]} },
+	{ MODKEY,                       XK_f,          setlayout,              {.v = &layouts[1]} },
+	{ MODKEY,                       XK_m,          setlayout,              {.v = &layouts[2]} },
+	{ MODKEY,                       XK_space,      setlayout,              {0} },
+	{ MODKEY|ShiftMask,             XK_space,      togglefloating,         {0} },
 	{ MODKEY,                       XK_grave,      togglescratch,          {.ui = 0 } },
 	{ MODKEY|ControlMask,           XK_grave,      setscratch,             {.ui = 0 } },
 	{ MODKEY|ShiftMask,             XK_grave,      removescratch,          {.ui = 0 } },
@@ -275,15 +275,15 @@ static const Key keys[] = {
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static const Button buttons[] = {
 	/* click                event mask           button          function        argument */
-//	{ ClkLtSymbol,          0,                   Button1,        setlayout,      {0} },
-//	{ ClkLtSymbol,          0,                   Button3,        setlayout,      {.v = &layouts[2]} },
+	{ ClkLtSymbol,          0,                   Button1,        setlayout,      {0} },
+	{ ClkLtSymbol,          0,                   Button3,        setlayout,      {.v = &layouts[2]} },
 //	{ ClkWinTitle,          0,                   Button2,        zoom,           {0} },
 //	{ ClkStatusText,        0,                   Button2,        spawn,          {.v = termcmd } },
-//	{ ClkClientWin,         MODKEY,              Button1,        movemouse,      {0} },
-//	{ ClkClientWin,         MODKEY,              Button2,        togglefloating, {0} },
-//	{ ClkClientWin,         MODKEY,              Button3,        resizemouse,    {0} },
-{ ClkTagBar,            0,                   Button1,        view,           {0} },
-//	{ ClkTagBar,            0,                   Button3,        toggleview,     {0} },
-//	{ ClkTagBar,            MODKEY,              Button1,        tag,            {0} },
-//	{ ClkTagBar,            MODKEY,              Button3,        toggletag,      {0} },
+	{ ClkClientWin,         MODKEY,              Button1,        movemouse,      {0} },
+	{ ClkClientWin,         MODKEY,              Button2,        togglefloating, {0} },
+	{ ClkClientWin,         MODKEY,              Button3,        resizemouse,    {0} },
+  { ClkTagBar,            0,                   Button1,        view,           {0} },
+	{ ClkTagBar,            0,                   Button3,        toggleview,     {0} },
+	{ ClkTagBar,            MODKEY,              Button1,        tag,            {0} },
+	{ ClkTagBar,            MODKEY,              Button3,        toggletag,      {0} },
 };

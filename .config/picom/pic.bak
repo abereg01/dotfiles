@@ -12,9 +12,9 @@ blur-background = true;
 blur-background-exclude = [
 ];
 
-# Blur
+#blur-kern = "3x3box";
 blur-method = "dual_kawase";
-blur-strength = 1;
+blur-strength = 3;
 opacity-rule = [
   "100:class_g = 'st-256color' && focused",
   "90:class_g = 'st-256color' && !focused"
@@ -27,27 +27,15 @@ no-fading-openclose = false;
 
 corner-radius = 0;
 
-# Shadows
 shadow = true;
 shadow-radius = 60;
+shadow-opacity = 0.5;
 shadow-offset-x = -60;
 shadow-offset-y = -25;
-shadow-opacity = 0.5;
 
-shadow-exclude = [
-    "! name~=''",
-    #"name = 'Notification'",
-    "name = 'xfce4-notifyd'",
-    "name = 'cpt_frame_window'",
-    "name *= 'VLC'",
-    #"name *= 'compton'",
-    "name *= 'picom'",
-    "name *= 'Chromium'",
-    "name *= 'Chrome'",
-    "name *= 'brave-browser'",
-    "class_g = 'Firefox' && argb",
-    "_GTK_FRAME_EXTENTS@:c",
-    "_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
-];
-
+#shadow-exclude = [
+#    "class_g = 'bar'",
+#    "class_g = 'lemonbar'",
+#    "class_g = 'firefox'",
+#];
 shadow-ignore-shaped = false;
