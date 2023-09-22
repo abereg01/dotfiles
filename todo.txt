@@ -1,0 +1,6 @@
+Border st
+bg feh
+sxhkd @space bindings
+rofi launcher
+picom
+autostart sxhkd, picom
