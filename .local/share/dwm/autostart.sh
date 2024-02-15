@@ -3,9 +3,11 @@
 #nm-applet &
 /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
 # volumeicon &
+unclutter &
 dunst &
-picom --experimental-backends &
-feh --bg-fill $HOME/wallpapers/nord/ign_unsplash44.png &
+picom --experimental-backends & 
+udiskie &
+feh --bg-fill $HOME/wallpapers/flowers.jpeg &
 
 #keybindings
-sxhkd -c ~/.config/sxhkd/sxhkdrc &
+sxhkd -c $HOME/dotfiles/.config/sxhkd/sxhkdrc &
