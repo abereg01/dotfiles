@@ -6,10 +6,12 @@
 * gruvbox-material
 * mountain
 * everblush
+* everforest
+* serenity
 * monochrome
 * pastelbeans
 * aquarium
 * ashes
 * jellybeans
 */
-#include "colorschemes/nord.c"
+#include "colorschemes/serenity.c"
