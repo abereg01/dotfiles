@@ -1,0 +1,23 @@
+font:
+  normal:
+    # family: Jetbrains Mono
+    # family: Iosevka Nerd Font
+    family: Hack Nerd Font
+    # family: Source Code Pro
+    style: Medium
+
+  bold:
+    # family: Jetbrains Mono
+    # family: Iosevka Nerd Font
+    family: Hack Nerd Font
+    # family: Source Code Pro
+    style: Bold
+
+  italic:
+    # family: Jetbrains Mono
+    # family: Iosevka Nerd Font
+    family: Hack Nerd Font
+    # family: Source Code Pro
+    style: "Light Italic"
+
+  size: 11
