@@ -27,16 +27,16 @@ static const char *fonts[]               = { "JetBrainsMono Nerd Font:size=13" }
 static const char dmenufont[]            = "JetBrainsMono Nerd Font:size=13";
 
 static char c000000[]                    = "#000000"; // placeholder value
+#include "colors.c"
+//static char normfgcolor[]                = "#b3cfa7";
+//static char normbgcolor[]                = "#2a2f33";
+//static char normbordercolor[]            = "#444444";
+//static char normfloatcolor[]             = "#3b4252";
 
-static char normfgcolor[]                = "#b3cfa7";
-static char normbgcolor[]                = "#2a2f33";
-static char normbordercolor[]            = "#444444";
-static char normfloatcolor[]             = "#3b4252";
-
-static char selfgcolor[]                 = "#b3cfa7";
-static char selbgcolor[]                 = "#2a2f33";
-static char selbordercolor[]             = "#88B482";
-static char selfloatcolor[]              = "#81a1c1";
+//static char selfgcolor[]                 = "#b3cfa7";
+//static char selbgcolor[]                 = "#2a2f33";
+//static char selbordercolor[]             = "#88B482";
+//static char selfloatcolor[]              = "#81a1c1";
 
 static char titlenormfgcolor[]           = "#bbbbbb";
 static char titlenormbgcolor[]           = "#222222";

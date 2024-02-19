@@ -19,7 +19,7 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 bspc config focus_follows_pointer true
 
-$HOME/dotfiles/bspwm/theme.conf &
+$HOME/.config/bspwm/theme.conf &
 #BSPWM coloring
 #bspc config normal_border_color		"#d3c6aa"
 #bspc config active_border_color		"#d3c6aa"
@@ -32,8 +32,8 @@ bspc rule -a yubioath-desktop \
 
 # Autostart
 
-$HOME/dotfiles/polybar/blocks/launch.sh &
-picom --config $HOME/dotfiles/picom/picom.conf --experimental-backends &
+$HOME/.config/polybar/blocks/launch.sh &
+picom --config $HOME/.config/picom/picom.conf --experimental-backends &
 setxkbmap -option grp:alt_shift_toggle us,se &
 #feh --bg-fill $theme.jpg 
 dunst &

@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "JetBrainsMono NF:pixelsize=18:antialias=true:autohint=true";
+static char *font = "JetBrainsMono NF:pixelsize=20:antialias=true:autohint=true";
 static int borderpx = 40;
 //static int borderpx = 0;
 static char *openurlcmd[] = { "/bin/sh", "-c",
