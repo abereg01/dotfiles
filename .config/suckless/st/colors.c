@@ -1,1 +1,1 @@
-#include "colorschemes/nord.c"
+#include "colorschemes/dracula.c"

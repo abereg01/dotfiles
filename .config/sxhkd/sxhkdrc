@@ -7,8 +7,8 @@ super + {b,s,y,v}
   yubioath-desktop, \
   st -e nvim}
 
-#super + v
-#  st -e nvim
+super + return
+  st 
 
 # Rofi
 #super + d
