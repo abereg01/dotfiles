@@ -27,16 +27,16 @@ static const char *fonts[]               = { "JetBrainsMono Nerd Font:size=13" }
 static const char dmenufont[]            = "JetBrainsMono Nerd Font:size=13";
 
 static char c000000[]                    = "#000000"; // placeholder value
-#include "colors.c"
-//static char normfgcolor[]                = "#b3cfa7";
-//static char normbgcolor[]                = "#2a2f33";
-//static char normbordercolor[]            = "#444444";
-//static char normfloatcolor[]             = "#3b4252";
+//#include "colors.c"
+static char normfgcolor[]                = "#b3cfa7";
+static char normbgcolor[]                = "#2a2f33";
+static char normbordercolor[]            = "#444444";
+static char normfloatcolor[]             = "#3b4252";
 
-//static char selfgcolor[]                 = "#b3cfa7";
-//static char selbgcolor[]                 = "#2a2f33";
-//static char selbordercolor[]             = "#88B482";
-//static char selfloatcolor[]              = "#81a1c1";
+static char selfgcolor[]                 = "#b3cfa7";
+static char selbgcolor[]                 = "#2a2f33";
+static char selbordercolor[]             = "#88B482";
+static char selfloatcolor[]              = "#81a1c1";
 
 static char titlenormfgcolor[]           = "#bbbbbb";
 static char titlenormbgcolor[]           = "#222222";
@@ -120,7 +120,7 @@ static Sp scratchpads[] = {
  */
 static char *tagicons[][NUMTAGS] =
 {
-	[DEFAULT_TAGS]        = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+	[DEFAULT_TAGS]        = { "1", "2", "", "4", "5", "6", "7", "8", "9" },
 	[ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
 	[ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
@@ -243,7 +243,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_m,          setlayout,              {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,      spawn,              {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_space,      togglefloating,         {0} },
-	{ MODKEY,                       XK_grave,      togglescratch,          {.ui = 0 } },
+	{ MODKEY,                       XK_u,      togglescratch,          {.ui = 0 } },
 	{ MODKEY|ControlMask,           XK_grave,      setscratch,             {.ui = 0 } },
 	{ MODKEY|ShiftMask,             XK_grave,      removescratch,          {.ui = 0 } },
 	{ MODKEY,                       XK_0,          view,                   {.ui = ~SPTAGMASK } },
