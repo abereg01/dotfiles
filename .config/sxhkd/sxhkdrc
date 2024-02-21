@@ -8,7 +8,7 @@ super + {b,s,y,v}
   st -e nvim}
 
 super + return
-  st 
+  st -e rxfetch 
 
 # Rofi
 #super + d

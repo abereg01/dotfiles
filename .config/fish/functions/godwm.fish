@@ -1,4 +1,4 @@
-function godwm --wraps='cd /home/andreas/dotfiles/.config/suckless/dwm/' --wraps='cd /home/andreas/dotfiles/.config/suckless/dwm/ && ls' --description 'alias godwm=cd /home/andreas/dotfiles/.config/suckless/dwm/ && ls'
-  cd /home/andreas/dotfiles/.config/suckless/dwm/ && ls $argv
+function godwm --wraps='cd ~/dotfiles/.config/chadwm/chadwm/ && ls' --description 'alias godwm=cd ~/dotfiles/.config/chadwm/chadwm/ && ls'
+  cd ~/dotfiles/.config/chadwm/chadwm/ && ls $argv
         
 end

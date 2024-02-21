@@ -1,1 +1,1 @@
-#include "colorschemes/dracula.c"
+#include "colorschemes/tokyonight.c"
