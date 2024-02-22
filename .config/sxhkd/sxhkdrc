@@ -11,8 +11,9 @@ super + return
   st -e rxfetch 
 
 # Rofi
-#super + d
-#  sh ~/dotfiles/.config/polybar/blocks/scripts/launcher.sh 
+super + d
+  rofi -no-lazy-grab -show drun -modi drun
+   
 
 # Powermenu
 #super + q
