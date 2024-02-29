@@ -7,8 +7,8 @@ super + {b,s,y,v}
   yubioath-desktop, \
   st -e nvim}
 
-super + return
-  st -e rxfetch 
+#super + return
+#  st -e rxfetch 
 
 # Rofi
 super + d
