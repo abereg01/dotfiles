@@ -10,6 +10,8 @@ dunst &
 picom --experimental-backends & 
 udiskie &
 feh --bg-fill $HOME/wallpapers/flowers.jpeg &
+brave-browser &
+google-chrome &
 
 dash $HOME/dotfiles/scripts/bar.sh &
 while type dwm >/dev/null; do dwm && continue || break; done

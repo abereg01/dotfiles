@@ -1,4 +1,4 @@
-function cl --wraps='clear && pfetch' --description 'alias cl=clear && pfetch'
-  clear && pfetch $argv
+function cl --wraps='clear && rxfetch' --description 'alias cl=clear && rxfetch'
+  clear && rxfetch $argv
         
 end
