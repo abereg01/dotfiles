@@ -1,11 +1,12 @@
 ####### APPLICATIONS #######
 # Launch
 # @space
-super + {b,s,y,v}
+super + {b,s,y,n,g}
   {brave-browser, \
   signal-desktop, \
   yubioath-desktop, \
-  st -e nvim}
+  nvim, \
+  google-chrome,}
 
 #super + return
 #  st -e rxfetch 
