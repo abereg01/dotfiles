@@ -14,7 +14,7 @@ start_if_installed() {
 
 # Function to set wallpaper
 set_wallpaper() {
-    local wallpaper="$HOME/wallpapers/flowers.jpeg"
+    local wallpaper="$HOME/.local/share/dwm/wallpaper"
     if [ -f "$wallpaper" ]; then
         feh --no-fehbg --bg-fill "$wallpaper"
     else
