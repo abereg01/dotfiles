@@ -1,0 +1,23 @@
+--- dwm.c
++++ dwm.c
+@@ -1386,12 +1385,6 @@ run(void)
+ }
+ 
+ void
+-runAutostart(void) {
+-	system("cd ~/.dwm; ./autostart_blocking.sh");
+-	system("cd ~/.dwm; ./autostart.sh &");
+-}
+-
+-void
+ scan(void)
+ {
+ 	unsigned int i, num;
+@@ -2151,7 +2144,6 @@ main(int argc, char *argv[])
+ 	checkotherwm();
+ 	setup();
+ 	scan();
+-	runAutostart();
+ 	run();
+ 	cleanup();
+ 	XCloseDisplay(dpy);
