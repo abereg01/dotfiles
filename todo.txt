@@ -1,7 +1,13 @@
 proton+pass
 nvchad
 
+mv 3dprint
 build new git repo
+installer
+  - debian
+  - arch
+  - void
 
 ssh script
+
 
