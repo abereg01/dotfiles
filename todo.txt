@@ -1,12 +1,8 @@
-proton+pass
-nvchad
+sync work git
 
-mv 3dprint
-build new git repo
-installer
-  - debian
-  - arch
-  - void
+pass work 
+
+mv 3dprint work
 
 breakout scripts
 
