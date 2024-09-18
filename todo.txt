@@ -1,3 +1,7 @@
-sxhkd @space bindings
-rofi launcher
+proton+pass
+nvchad
+
+build new git repo
+
+ssh script
 
