@@ -1,12 +1,11 @@
-sync work git
-
 pass work 
 
 mv 3dprint work
 
-breakout scripts
+breakout scripts ssh
 
-
-ssh script
+firefox
+polybar
+.Xresources
 
 
