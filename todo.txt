@@ -7,5 +7,6 @@ breakout scripts ssh
 firefox
 polybar
 .Xresources
+nvim lsp install
 
 
