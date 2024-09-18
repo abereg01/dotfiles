@@ -1,5 +1,0 @@
-# getNF
-export PATH="$HOME/.local/bin:$PATH"
-git clone https://github.com/ronniedroid/getnf.git
-
- 
