@@ -9,4 +9,4 @@ polybar
 .Xresources
 nvim lsp install
 
-
+rose pine st/color script
