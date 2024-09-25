@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+autostart() {
+        if ! pgrep -fx "$1" ; then
+                "$@"&
+        fi
+}
+
+# autostart
+# usage: autostart [command]
+
+# xsettingsd
+autostart xsettingsd
+
+# wallpaper
+autostart "$HOME"/.fehbg
+
+# polybar
+autostart "$HOME"/.config/polybar/launch
+
+# notification
+autostart dunst
+
+# compositor
+autostart picom
+
+## TO DO ##
+
+# mpd
+# autostart mpd
+
+# polkit-gnome -- xfce?
+autostart /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1

@@ -1,0 +1,15 @@
+set icons true
+set preview true
+
+#Basic functions
+map <enter> open
+map <backspace2> delete
+map r rename
+
+#Quick Movement
+map gc cd ~/.config
+map gd cd ~/dotfiles/
+map gi cd ~/lib/images/wallpapers/
+map gs cd ~/lib/scripts/
+
+

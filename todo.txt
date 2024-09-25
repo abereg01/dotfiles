@@ -2,7 +2,7 @@ pass work
 
 mv 3dprint work
 
-breakout scripts ssh
+ssh script
 
 firefox
 polybar
@@ -10,3 +10,4 @@ polybar
 nvim lsp install
 
 rose pine st/color script
+

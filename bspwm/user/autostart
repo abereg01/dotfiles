@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+autostart() {
+	if ! pgrep -fx "$1" ; then
+		"$@"&
+	fi
+}
+
+# user specific autostart
+# usage: autostart [command]
+
+# Network Manager Applet
+# autostart nm-applet
+
+# Ibus daemon
+# autostart ibus-daemon -drx
+
+# Fcitx5
+# autostart fcitx5
+
+# Bluetooth
+# autostart blueberry-tray
+
+# Syncthing
+# autostart syncthing --no-browser

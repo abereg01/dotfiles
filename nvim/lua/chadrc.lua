@@ -6,7 +6,7 @@
 local M = {}
 
 M.base46 = {
-	theme = "rosepine",
+	theme = "nord",
 
 	-- hl_override = {
 	-- 	Comment = { italic = true },
@@ -15,5 +15,3 @@ M.base46 = {
 }
 
 return M
-
--- Updated on Thu Sep 19 08:24:52 AM CEST 2024

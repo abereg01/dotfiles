@@ -1,4 +1,4 @@
-function dot --wraps='cd ~/dotfiles/ && cd' --description 'alias dot=cd ~/dotfiles/ && cd'
-  cd ~/dotfiles/ && cd $argv
+function dot --wraps='cd $HOME/dotfiles & ls' --description 'alias dot=cd $HOME/dotfiles & ls'
+  cd $HOME/dotfiles & ls $argv
         
 end

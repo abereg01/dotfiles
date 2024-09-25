@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+autostart() {
+	if ! pgrep -fx "$1" ; then
+		"$@"&
+	fi
+}
+
+# autostart
+# usage: autostart [command]
+
+autostart xsettingsd
+
+autostart "$HOME"/.fehbg
+
+autostart "$HOME"/.config/polybar/launch.sh
+
+autostart dunst
+
+autostart picom
+
+#autostart mpd
+
+autostart xfce4-power-manager
+
+autostart /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+autostart unclutter
+
+autostart udiskie

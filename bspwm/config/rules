@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+rule() { bspc rule -a {$@} }
+
+# rules
+# usage: rule [command] state=[state]
+
+rule Galculator state=floating
+rule Gpick state=floating
+rule Emacs state=tiled

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+xrdb merge "$HOME/.Xresources"
+"$HOME/dotfiles/bspwm/config/colors"
+"$HOME/dotfiles/bspwm/config/autostart"
+"$HOME/dotfiles/bspwm/config/window_rules"

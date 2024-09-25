@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+wid=$1
+class=$2
+instance=$3
+consequences=$4
+
+result() {
+    eval "$consequences"
+    [ "$state" ] || echo "$1"
+}
+
+case "$class" in
+    float)
+        result "state=floating center=on"
+    ;;
+    Pavucontrol)
+        result "state=floating center=on"
+        ;;
+esac
+
+# cursor config
+xsetroot -cursor_name left_ptr
+
+# fix java apps
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+############
+RULES
+
+#!/usr/bin/env bash
+
+rule() { bspc rule -a {$@} }
+
+# rules
+# usage: rule [command] state=[state]
+
+rule Galculator state=floating
+rule Gpick state=floating
+rule Emacs state=tiled

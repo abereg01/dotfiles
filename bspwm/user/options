@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# user specific options
+
+# current colorscheme
+bsp_color=nord
+
+# gaps (default: 5)
+bsp_gaps=5
+
+# window border (default: 5)
+bsp_border=5
+
+# split ratio (default: 0.5)
+bsp_split_ratio=0.5
+
+# padding (default: 0)
+bsp_top_padding=0
+bsp_bottom_padding=0
+bsp_left_padding=0
+bsp_right_padding=0
+
+# focus follow pointer (default: true)
+bsp_focus_pointer=true
+
+# borderless monocle (default: true)
+bsp_borderless_monocle=true
+
+# gapless monocle (default: false)
+bsp_gapless_monocle=false
