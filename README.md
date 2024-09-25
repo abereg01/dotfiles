@@ -1,7 +1,7 @@
 # 🏠 My Dotfiles
 
-![GitHub last commit](https://img.shields.io/github/last-commit/yourusername/dotfiles)
-![GitHub repo size](https://img.shields.io/github/repo-size/yourusername/dotfiles)
+![GitHub last commit](https://img.shields.io/github/last-commit/abereg01/dotfiles)
+![GitHub repo size](https://img.shields.io/github/repo-size/abereg01/dotfiles)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Welcome to my dotfiles repository! This is where I keep all my configuration files for a seamless setup across different machines and window managers.
