@@ -104,7 +104,7 @@ update_ui_colors() {
 }
 
 generate_colors_fzf() {
-    local fish_colors_file="$HOME/.config/fish/colors.fish"
+    local fish_colors_file="$HOME/.config/fish/fzfcolors.fish"
     echo "# Color configuration" > "$fish_colors_file"
     echo "set -g color_background $background" >> "$fish_colors_file"
     echo "set -g color_foreground $foreground" >> "$fish_colors_file"
