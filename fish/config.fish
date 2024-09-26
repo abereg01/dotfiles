@@ -4,7 +4,7 @@ set fish_greeting
 source $HOME/dotfiles/fish/ssh_agent.fish
 
 # Source the color configuration
-source ~/.config/fish/colors.fish
+source ~/.config/fish/fzfcolors.fish
 
 function fzf --wraps="fzf"
   set -Ux FZF_DEFAULT_OPTS "
