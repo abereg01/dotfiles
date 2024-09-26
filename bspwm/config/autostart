@@ -9,6 +9,10 @@ autostart() {
 # autostart
 # usage: autostart [command]
 
+xrandr --output eDP-1 --off --output DP-1-2 --primary --mode 3440x1440 --pos 0x0 --rotate normal 
+
+eval "$(ssh-agent -s)"
+
 autostart xsettingsd
 
 autostart "$HOME"/.fehbg
@@ -19,11 +23,9 @@ autostart dunst
 
 autostart picom
 
-#autostart mpd
-
 autostart xfce4-power-manager
 
-autostart /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+#autostart /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 autostart unclutter
 

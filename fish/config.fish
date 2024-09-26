@@ -1,30 +1,7 @@
 set fish_greeting
 
-if status is-interactive
-    # Commands to run in interactive sessions can go here
-end
-
-if not set -q SSH_AUTH_SOCK
-    eval (ssh-agent -c)
-    set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
-    set -Ux SSH_AGENT_PID $SSH_AGENT_PID
-end
-
-# Check if any keys are already added
-if not ssh-add -l > /dev/null 2>&1
-    # List of keys to add
-    set keys_to_add ~/.ssh/id_ed25519_arch ~/.ssh/id_ed25519_work
-
-    # Loop through the keys and add them
-    for key in $keys_to_add
-        if test -f $key
-            ssh-add $key
-        else
-            echo "Warning: $key does not exist"
-        end
-    end
-end
-
+# Load and run SSH agent setup
+source $HOME/dotfiles/fish/ssh_agent.fish
 
 function fzf --wraps="fzf"
   set -Ux FZF_DEFAULT_OPTS "
