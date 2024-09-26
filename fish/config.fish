@@ -3,13 +3,16 @@ set fish_greeting
 # Load and run SSH agent setup
 source $HOME/dotfiles/fish/ssh_agent.fish
 
+# Source the color configuration
+source ~/.config/fish/colors.fish
+
 function fzf --wraps="fzf"
   set -Ux FZF_DEFAULT_OPTS "
-        --color=fg:#908caa,bg:#232136,hl:#ea9a97
-        --color=fg+:#e0def4,bg+:#393552,hl+:#ea9a97
-        --color=border:#44415a,header:#3e8fb0,gutter:#232136
-        --color=spinner:#f6c177,info:#9ccfd8
-        --color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa"  
+        --color=fg:$color_fg,bg:$color_bg,hl:$color_hl
+        --color=fg+:$color_fg_plus,bg+:$color_bg_plus,hl+:$color_hl_plus
+        --color=border:$color_border,header:$color_header,gutter:$color_gutter
+        --color=spinner:$color_spinner,info:$color_info
+        --color=pointer:$color_pointer,marker:$color_marker,prompt:$color_prompt"  
   command fzf
 end
 
