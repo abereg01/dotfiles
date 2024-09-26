@@ -101,7 +101,37 @@ update_ui_colors() {
     #Update BAT theme
     sed -i "s/--theme=\"[^\"]*\"/--theme=\"$color\"/" \
            "$CONFIG_DIR/bat/bat.conf"
+}
 
+generate_colors_fzf() {
+    local fish_colors_file="$HOME/.config/fish/colors.fish"
+    echo "# Color configuration" > "$fish_colors_file"
+    echo "set -g color_background $background" >> "$fish_colors_file"
+    echo "set -g color_foreground $foreground" >> "$fish_colors_file"
+    echo "set -g color_black $color0" >> "$fish_colors_file"
+    echo "set -g color_red $color1" >> "$fish_colors_file"
+    echo "set -g color_green $color2" >> "$fish_colors_file"
+    echo "set -g color_yellow $color3" >> "$fish_colors_file"
+    echo "set -g color_blue $color4" >> "$fish_colors_file"
+    echo "set -g color_magenta $color5" >> "$fish_colors_file"
+    echo "set -g color_cyan $color6" >> "$fish_colors_file"
+    echo "set -g color_white $color7" >> "$fish_colors_file"
+    echo "" >> "$fish_colors_file"
+    echo "# Additional color mappings for fzf" >> "$fish_colors_file"
+    echo "set -g color_fg \$color_foreground" >> "$fish_colors_file"
+    echo "set -g color_bg \$color_background" >> "$fish_colors_file"
+    echo "set -g color_hl \$color_yellow" >> "$fish_colors_file"
+    echo "set -g color_fg_plus \$color_white" >> "$fish_colors_file"
+    echo "set -g color_bg_plus \$color_black" >> "$fish_colors_file"
+    echo "set -g color_hl_plus \$color_yellow" >> "$fish_colors_file"
+    echo "set -g color_border \$color_black" >> "$fish_colors_file"
+    echo "set -g color_header \$color_blue" >> "$fish_colors_file"
+    echo "set -g color_gutter \$color_background" >> "$fish_colors_file"
+    echo "set -g color_spinner \$color_yellow" >> "$fish_colors_file"
+    echo "set -g color_info \$color_cyan" >> "$fish_colors_file"
+    echo "set -g color_pointer \$color_magenta" >> "$fish_colors_file"
+    echo "set -g color_marker \$color_red" >> "$fish_colors_file"
+    echo "set -g color_prompt \$color_foreground" >> "$fish_colors_file"
 }
 
 # Function to restart necessary services
@@ -118,6 +148,7 @@ main() {
     #lockscreen
     update_terminal_colors
     update_ui_colors
+    generate_colors_fzf
     restart_services
 }
 
