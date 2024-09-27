@@ -1,5 +1,12 @@
 # keybindings
 
+# screen 
+super + 0
+  sh $HOME/lib/scripts/os/arch/screen.sh
+
+super + alt + l
+  ~/dotfiles/bspwm/bin/language
+
 # terminal
 super + Return
 	kitty

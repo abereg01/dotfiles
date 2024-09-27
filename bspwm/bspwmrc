@@ -13,6 +13,8 @@ for process in "${processes[@]}"; do
     fi
 done
 
+setxkbmap us
+
 # start sxhkd: keybind daemon
 sxhkd -c "$HOME"/.config/bspwm/config/keys &
 

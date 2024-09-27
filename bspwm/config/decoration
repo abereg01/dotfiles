@@ -2,5 +2,5 @@
 
 # decoration
 
-bspc config normal_border_color "#3B4252"
-bspc config focused_border_color "#81A1C1"
+bspc config normal_border_color "#26233a"
+bspc config focused_border_color "#9ccfd8"
