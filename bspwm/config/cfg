@@ -6,13 +6,13 @@
 source "$HOME"/.config/bspwm/user/options
 
 # workspaces
-for monitor in $(xrandr -q | grep -w 'connected' | cut -d' ' -f1); do
+for monitor in $(xrandr -q | grep -w 'connected' | cut -d' ' -f1); do #check for DP-1-2
 		bspc monitor "$monitor" -d '1' '2' '3' '4' '5' '6' '7' '8' '9'
 done
 
 # config
-bspc config remove_unplugged_monitors true
-bspc config remove_disabled_monitors true
+bspc config remove_unplugged_monitors false #was true
+bspc config remove_disabled_monitors true 
 bspc config window_gap $bsp_gaps
 bspc config border_width $bsp_border
 bspc config focus_follows_pointer $bsp_focus_pointer
