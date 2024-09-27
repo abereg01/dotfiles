@@ -14,8 +14,8 @@ super + shift + Return
   kitty --class float,float -o window.dimensions.lines=25 window.dimensions.columns=80
 
 # menu
-super + x
-  "$HOME"/.config/bspwm/bin/menu
+super + shift + s
+  $HOME/lib/scripts/work/management/rofi/combined-rofi-launcher.sh
 
 # launcher
 super + d
