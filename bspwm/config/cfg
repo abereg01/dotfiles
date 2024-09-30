@@ -11,8 +11,8 @@ for monitor in $(xrandr -q | grep -w 'connected' | cut -d' ' -f1); do #check for
 done
 
 # config
-bspc config remove_unplugged_monitors false #was true
-bspc config remove_disabled_monitors true 
+#bspc config remove_unplugged_monitors false #was true
+#bspc config remove_disabled_monitors false 
 bspc config window_gap $bsp_gaps
 bspc config border_width $bsp_border
 bspc config focus_follows_pointer $bsp_focus_pointer

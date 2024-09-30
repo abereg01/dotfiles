@@ -15,12 +15,14 @@ done
 
 setxkbmap us
 
+bspc rule -a kitty:floating_kitty state=floating center=on layer=above
+
 # start sxhkd: keybind daemon
 sxhkd -c "$HOME"/.config/bspwm/config/keys &
 
 # config files
-"$HOME"/.config/bspwm/config/init &
-bspc config external_rules_command "$HOME"/.config/bspwm/config/external-rules &
+$HOME/.config/bspwm/config/init &
+bspc config external_rules_command $HOME/.config/bspwm/config/external-rules &
 
 # user's config
-"$HOME"/.config/bspwm/user/init &
+$HOME/.config/bspwm/user/init &

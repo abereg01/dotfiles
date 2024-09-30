@@ -11,11 +11,11 @@ super + alt + l
 super + Return
 	kitty
 super + shift + Return
-  kitty --class float,float -o window.dimensions.lines=25 window.dimensions.columns=80
+  kitty --class float,float -o initial_window_width=25c -o initial_window_height=100c
 
 # menu
 super + shift + s
-  $HOME/lib/scripts/work/management/rofi/combined-rofi-launcher.sh
+  $HOME/lib/scripts/work/management/management.sh
 
 # launcher
 super + d
@@ -121,7 +121,7 @@ super + Delete
 
 # colorscheme changer
 super + shift + c
-  "$HOME"/.config/bspwm/bin/color
+  $HOME/.config/bspwm/bin/color
 
 # volume
 super + ctrl + {minus,equal,0}
