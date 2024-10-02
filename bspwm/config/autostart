@@ -19,8 +19,6 @@ autostart $HOME/.fehbg
 
 autostart $HOME/.config/polybar/launch.sh
 
-autostart $HOME/dotfiles/bspwm/bin/output_active.sh
-
 autostart dunst
 
 autostart picom
