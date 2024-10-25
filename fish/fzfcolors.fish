@@ -1,12 +1,12 @@
 # Color configuration
 set -g color_background #2E3440
-set -g color_foreground #E5E9F0
+set -g color_foreground #D8DEE9
 set -g color_black #3B4252
-set -g color_red #E06C75
-set -g color_green #9EC183
+set -g color_red #BF616A
+set -g color_green #A3BE8C
 set -g color_yellow #EBCB8B
 set -g color_blue #81A1C1
-set -g color_magenta #B988B0
+set -g color_magenta #B48EAD
 set -g color_cyan #88C0D0
 set -g color_white #E5E9F0
 
