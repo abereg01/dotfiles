@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Check if DP-1-2 is connected
+if xrandr | grep -q "DP-1-2 connected"; then
+    echo "DP-1-2 is connected. Setting it as primary display."
+    xrandr --output eDP-1 --off --output DP-1-2 --primary --mode 3440x1440 --pos 0x0 --rotate normal
+else
+    echo "DP-1-2 is not connected. Using eDP-1 as primary display."
+    xrandr --output DP-1-2 --off --output eDP-1 --primary --mode 2256x1504 --pos 0x0 --rotate normal
+fi
+
