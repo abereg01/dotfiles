@@ -22,20 +22,22 @@ print_msg() {
 # Function to show interactive menu
 show_menu() {
     clear
-    echo "╔═══════════════════════════╗"
-    echo "║     Dotfiles Manager      ║"
-    echo "╠═══════════════════════════╣"
-    echo "║ 1) Sync to GitHub        ║"
-    echo "║ 2) Backup Configs        ║"
-    echo "║ 3) Install Configs       ║"
-    echo "║ 4) Update Package Lists  ║"
-    echo "║ 5) Clean System          ║"
-    echo "║ 6) Test in Docker        ║"
-    echo "║                          ║"
-    echo "║ q) Quit                  ║"
-    echo "╚═══════════════════════════╝"
     echo
-    echo "Select an option: "
+    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${BLUE}           📁 ${GREEN}Dotfiles Manager${BLUE} 📁            ${NC}"
+    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo
+    echo -e " ${YELLOW}1${NC}) 🔄 Sync to GitHub"
+    echo -e " ${YELLOW}2${NC}) 💾 Backup Configs"
+    echo -e " ${YELLOW}3${NC}) 📥 Install Configs"
+    echo -e " ${YELLOW}4${NC}) 📋 Update Package Lists"
+    echo -e " ${YELLOW}5${NC}) 🧹 Clean System"
+    echo -e " ${YELLOW}6${NC}) 🐳 Test in Docker"
+    echo
+    echo -e " ${YELLOW}q${NC}) 🚪 Quit"
+    echo
+    echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -ne "\n${GREEN}Select an option:${NC} "
 }
 
 # Function to handle single keypress input
