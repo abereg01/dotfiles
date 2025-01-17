@@ -19,40 +19,16 @@ print_msg() {
     echo -e "${color}${msg}${NC}"
 }
 
-# Function to show interactive menu
-show_menu() {
-    clear
-    echo "╔═══════════════════════════╗"
-    echo "║     Dotfiles Manager      ║"
-    echo "╠═══════════════════════════╣"
-    echo "║ 1) Sync to GitHub        ║"
-    echo "║ 2) Backup Configs        ║"
-    echo "║ 3) Install Configs       ║"
-    echo "║ 4) Update Package Lists  ║"
-    echo "║ 5) Clean System          ║"
-    echo "║ 6) Test in Docker        ║"
-    echo "║                          ║"
-    echo "║ q) Quit                  ║"
-    echo "╚═══════════════════════════╝"
-    echo
-    echo "Select an option: "
-}
-
-# Function to handle single keypress input
-get_keypress() {
-    # Save current terminal settings
-    old_tty_settings=$(stty -g)
-    
-    # Set terminal to raw mode
-    stty raw -echo
-    
-    # Read single character
-    char=$(dd bs=1 count=1 2>/dev/null)
-    
-    # Restore terminal settings
-    stty "$old_tty_settings"
-    
-    echo "$char"
+# Function to show help menu
+show_help() {
+    echo "Dotfiles Manager - Usage:"
+    echo "  -b, --backup     Backup current configurations"
+    echo "  -s, --sync       Sync and push changes to GitHub"
+    echo "  -i, --install    Install packages and configurations"
+    echo "  -u, --update     Update package lists"
+    echo "  -c, --clean      Clean unused packages and cache"
+    echo "  -t, --test       Test configurations in a clean environment"
+    echo "  -h, --help       Show this help message"
 }
 
 # Function to backup configurations
@@ -169,71 +145,27 @@ test_configs() {
         bash -c "cd /root/dotfiles && ./scripts/install.sh"
 }
 
-# Function to handle menu selection
-handle_menu_selection() {
-    case $1 in
-        1) sync_changes ;;
-        2) backup_configs ;;
-        3) install_configs ;;
-        4) update_packages ;;
-        5) clean_system ;;
-        6) test_configs ;;
-        q|Q) exit 0 ;;
-        *) return 1 ;;
-    esac
-    
-    if [ $# -eq 1 ]; then
-        echo
-        print_msg "$YELLOW" "Press any key to continue..."
-        get_keypress
-    fi
-}
-
 # Main script logic
-if [ $# -eq 0 ]; then
-    # Interactive mode
-    while true; do
-        show_menu
-        choice=$(get_keypress)
-        echo
-        handle_menu_selection "$choice"
-    done
-else
-    # Command line mode
-    case "$1" in
-        -b|--backup)
-            backup_configs
-            ;;
-        -s|--sync)
-            sync_changes
-            ;;
-        -i|--install)
-            install_configs
-            ;;
-        -u|--update)
-            update_packages
-            ;;
-        -c|--clean)
-            clean_system
-            ;;
-        -t|--test)
-            test_configs
-            ;;
-        -h|--help)
-            echo "Dotfiles Manager - Usage:"
-            echo "  -b, --backup     Backup current configurations"
-            echo "  -s, --sync       Sync and push changes to GitHub"
-            echo "  -i, --install    Install packages and configurations"
-            echo "  -u, --update     Update package lists"
-            echo "  -c, --clean      Clean unused packages and cache"
-            echo "  -t, --test       Test configurations in a clean environment"
-            echo "  -h, --help       Show this help message"
-            echo
-            echo "Run without arguments for interactive menu"
-            ;;
-        *)
-            echo "Unknown option. Use -h or --help for usage information."
-            exit 1
-            ;;
-    esac
-fi
+case "$1" in
+    -b|--backup)
+        backup_configs
+        ;;
+    -s|--sync)
+        sync_changes
+        ;;
+    -i|--install)
+        install_configs
+        ;;
+    -u|--update)
+        update_packages
+        ;;
+    -c|--clean)
+        clean_system
+        ;;
+    -t|--test)
+        test_configs
+        ;;
+    -h|--help|*)
+        show_help
+        ;;
+esac
