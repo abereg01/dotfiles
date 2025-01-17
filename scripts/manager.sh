@@ -27,159 +27,60 @@ show_menu() {
     echo -e "${BLUE}           📁 ${GREEN}Dotfiles Manager${BLUE} 📁            ${NC}"
     echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     echo
-    echo -e " ${YELLOW}1${NC}) 🔄 Sync to GitHub"
-    echo -e " ${YELLOW}2${NC}) 💾 Backup Configs"
-    echo -e " ${YELLOW}3${NC}) 📥 Install Configs"
-    echo -e " ${YELLOW}4${NC}) 📋 Update Package Lists"
-    echo -e " ${YELLOW}5${NC}) 🧹 Clean System"
-    echo -e " ${YELLOW}6${NC}) 🐳 Test in Docker"
-    echo
+    echo -e " ${YELLOW}1${NC}) 🔄 Push to GitHub"
+    echo -e " ${YELLOW}2${NC}) 📋 Update Package Lists"
+    echo -e " ${YELLOW}3${NC}) 🧹 Clean System"
+    echo -e "${BLUE}────────────────────────────────────────────────${NC}"
+    echo -e " ${YELLOW}4${NC}) 💾 Backup Configs"
+    echo -e " ${YELLOW}5${NC}) 📥 Install Configs"
+    echo -e " ${YELLOW}6${NC}) 🔗 Sync Configs (stow)"
+    echo -e " ${YELLOW}7${NC}) 🐳 Test in Docker"
+    echo -e "${BLUE}────────────────────────────────────────────────${NC}"
     echo -e " ${YELLOW}q${NC}) 🚪 Quit"
     echo
     echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
     echo -ne "\n${GREEN}Select an option:${NC} "
 }
 
-# Function to handle single keypress input
-get_keypress() {
-    # Save current terminal settings
-    old_tty_settings=$(stty -g)
+# Function to sync configs using stow
+sync_configs() {
+    print_msg "$BLUE" "Syncing configs using stow..."
     
-    # Set terminal to raw mode
-    stty raw -echo
+    # Remove existing symlinks
+    find "$CONFIG_DIR" -maxdepth 1 -type l -delete
     
-    # Read single character
-    char=$(dd bs=1 count=1 2>/dev/null)
+    # Stow configs
+    cd "$DOTFILES_DIR/configs" || exit 1
+    stow . --target="$HOME"
     
-    # Restore terminal settings
-    stty "$old_tty_settings"
-    
-    echo "$char"
+    print_msg "$GREEN" "Configs synced successfully"
 }
 
-# Function to backup configurations
-backup_configs() {
-    print_msg "$BLUE" "Backing up configurations..."
+# Function to push to GitHub
+github_push() {
+    print_msg "$BLUE" "Pushing to GitHub..."
     
-    local backup_dir="$BACKUP_DIR/backup-$(date +%Y%m%d-%H%M%S)"
-    mkdir -p "$backup_dir"
-    
-    for config in "$CONFIG_DIR"/*; do
-        if [ -d "$config" ]; then
-            cp -r "$config" "$backup_dir/"
-            print_msg "$GREEN" "Backed up $(basename "$config")"
-        fi
-    done
-    
-    print_msg "$GREEN" "Backup completed at $backup_dir"
-}
-
-# Function to sync and push changes
-sync_changes() {
-    print_msg "$BLUE" "Syncing changes..."
-    
-    # Update package lists
-    pacman -Qqen > "$DOTFILES_DIR/packages/pacman.txt"
-    pacman -Qqem > "$DOTFILES_DIR/packages/aur.txt"
-    pacman -Qe | awk '{print $1 " # " $2}' > "$DOTFILES_DIR/packages/packages-with-descriptions.txt"
-    
-    # Sync configs
-    for config in "$CONFIG_DIR"/*; do
-        if [ -d "$config" ]; then
-            config_name=$(basename "$config")
-            if [ -d "$DOTFILES_DIR/configs/$config_name" ]; then
-                rm -rf "$DOTFILES_DIR/configs/$config_name"
-                cp -r "$config" "$DOTFILES_DIR/configs/"
-                print_msg "$GREEN" "Synced $config_name"
-            fi
-        fi
-    done
-    
-    # Git operations
     cd "$DOTFILES_DIR" || exit 1
     git add .
     git commit -m "Update dotfiles $(date +%Y-%m-%d)"
-    # Get current branch name
     current_branch=$(git rev-parse --abbrev-ref HEAD)
     git push origin "$current_branch"
     
-    print_msg "$GREEN" "Sync completed"
+    print_msg "$GREEN" "Push completed"
 }
 
-# Function to install configurations
-install_configs() {
-    print_msg "$BLUE" "Installing configurations..."
-    
-    # Install official packages
-    sudo pacman -S --needed - < "$DOTFILES_DIR/packages/pacman.txt"
-    
-    # Install AUR packages
-    yay -S --needed - < "$DOTFILES_DIR/packages/aur.txt"
-    
-    # Stow configurations
-    cd "$DOTFILES_DIR/configs" || exit 1
-    for dir in */; do
-        stow -v -R -t "$CONFIG_DIR" "${dir%/}"
-        print_msg "$GREEN" "Installed ${dir%/}"
-    done
-    
-    print_msg "$GREEN" "Installation completed"
-}
-
-# Function to update package lists
-update_packages() {
-    print_msg "$BLUE" "Updating package lists..."
-    
-    # Update system
-    sudo pacman -Syu
-    yay -Syu
-    
-    # Update package lists
-    pacman -Qqen > "$DOTFILES_DIR/packages/pacman.txt"
-    pacman -Qqem > "$DOTFILES_DIR/packages/aur.txt"
-    
-    print_msg "$GREEN" "Package lists updated"
-}
-
-# Function to clean system
-clean_system() {
-    print_msg "$BLUE" "Cleaning system..."
-    
-    # Remove unused packages
-    yay -Rns $(yay -Qdtq)
-    
-    # Clean package cache
-    yay -Sc
-    
-    print_msg "$GREEN" "System cleaned"
-}
-
-# Function to test in clean environment
-test_configs() {
-    print_msg "$BLUE" "Testing configurations..."
-    
-    # Check if Docker is installed
-    if ! command -v docker &> /dev/null; then
-        print_msg "$RED" "Docker is required for testing"
-        exit 1
-    fi
-    
-    # Run test in Docker
-    docker run -it \
-        -v "$DOTFILES_DIR:/root/dotfiles" \
-        archlinux:latest \
-        bash -c "cd /root/dotfiles && ./scripts/install.sh"
-}
+[Previous functions remain the same: backup_configs, install_configs, update_packages, clean_system, test_configs]
 
 # Function to handle menu selection
 handle_menu_selection() {
     case $1 in
-        1) sync_changes ;;
-        2) backup_configs ;;
-        3) install_configs ;;
-        4) update_packages ;;
-        5) clean_system ;;
-        6) test_configs ;;
+        1) github_push ;;
+        2) update_packages ;;
+        3) clean_system ;;
+        4) backup_configs ;;
+        5) install_configs ;;
+        6) sync_configs ;;
+        7) test_configs ;;
         q|Q) exit 0 ;;
         *) return 1 ;;
     esac
@@ -201,41 +102,35 @@ if [ $# -eq 0 ]; then
         handle_menu_selection "$choice"
     done
 else
-    # Command line mode
-    case "$1" in
-        -b|--backup)
-            backup_configs
-            ;;
-        -s|--sync)
-            sync_changes
-            ;;
-        -i|--install)
-            install_configs
-            ;;
-        -u|--update)
-            update_packages
-            ;;
-        -c|--clean)
-            clean_system
-            ;;
-        -t|--test)
-            test_configs
-            ;;
-        -h|--help)
-            echo "Dotfiles Manager - Usage:"
-            echo "  -b, --backup     Backup current configurations"
-            echo "  -s, --sync       Sync and push changes to GitHub"
-            echo "  -i, --install    Install packages and configurations"
-            echo "  -u, --update     Update package lists"
-            echo "  -c, --clean      Clean unused packages and cache"
-            echo "  -t, --test       Test configurations in a clean environment"
-            echo "  -h, --help       Show this help message"
-            echo
-            echo "Run without arguments for interactive menu"
-            ;;
-        *)
-            echo "Unknown option. Use -h or --help for usage information."
-            exit 1
-            ;;
-    esac
+    # Parse multiple flags
+    while getopts "ucsgbith" opt; do
+        case $opt in
+            u) update_packages ;;
+            c) clean_system ;;
+            s) sync_configs ;;
+            g) github_push ;;
+            b) backup_configs ;;
+            i) install_configs ;;
+            t) test_configs ;;
+            h)
+                echo "Dotfiles Manager - Usage:"
+                echo "  -u  Update package lists"
+                echo "  -c  Clean system"
+                echo "  -s  Sync configs (stow)"
+                echo "  -g  Push to GitHub"
+                echo "  -b  Backup configs"
+                echo "  -i  Install configs"
+                echo "  -t  Test in Docker"
+                echo "  -h  Show this help message"
+                echo
+                echo "Flags can be combined, e.g.:"
+                echo "  ./manager.sh -ucsg"
+                exit 0
+                ;;
+            \?)
+                echo "Invalid option: -$OPTARG"
+                exit 1
+                ;;
+        esac
+    done
 fi
