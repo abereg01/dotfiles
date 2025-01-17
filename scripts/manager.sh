@@ -19,6 +19,15 @@ print_msg() {
     echo -e "${color}${msg}${NC}"
 }
 
+# Function to get single keypress
+get_keypress() {
+    old_tty_settings=$(stty -g)
+    stty raw -echo
+    char=$(dd bs=1 count=1 2>/dev/null)
+    stty "$old_tty_settings"
+    echo "$char"
+}
+
 # Function to show interactive menu
 show_menu() {
     clear
@@ -42,14 +51,33 @@ show_menu() {
     echo -ne "\n${GREEN}Select an option:${NC} "
 }
 
+# Function to backup configurations
+backup_configs() {
+    print_msg "$BLUE" "Backing up configurations..."
+    
+    local backup_dir="$BACKUP_DIR/backup-$(date +%Y%m%d-%H%M%S)"
+    mkdir -p "$backup_dir"
+    
+    for config in "$CONFIG_DIR"/*; do
+        if [ -d "$config" ]; then
+            cp -r "$config" "$backup_dir/"
+            print_msg "$GREEN" "Backed up $(basename "$config")"
+        fi
+    done
+    
+    print_msg "$GREEN" "Backup completed at $backup_dir"
+}
+
 # Function to sync configs using stow
 sync_configs() {
     print_msg "$BLUE" "Syncing configs using stow..."
     
-    # Remove existing symlinks
-    find "$CONFIG_DIR" -maxdepth 1 -type l -delete
+    # Check if stow is installed
+    if ! command -v stow &> /dev/null; then
+        print_msg "$RED" "stow is not installed. Installing..."
+        sudo pacman -S --needed stow
+    fi
     
-    # Stow configs
     cd "$DOTFILES_DIR/configs" || exit 1
     stow . --target="$HOME"
     
@@ -69,7 +97,66 @@ github_push() {
     print_msg "$GREEN" "Push completed"
 }
 
-[Previous functions remain the same: backup_configs, install_configs, update_packages, clean_system, test_configs]
+# Function to install configurations
+install_configs() {
+    print_msg "$BLUE" "Installing configurations..."
+    
+    # Install official packages
+    sudo pacman -S --needed - < "$DOTFILES_DIR/packages/pacman.txt"
+    
+    # Install AUR packages
+    yay -S --needed - < "$DOTFILES_DIR/packages/aur.txt"
+    
+    # Sync configs
+    sync_configs
+    
+    print_msg "$GREEN" "Installation completed"
+}
+
+# Function to update package lists
+update_packages() {
+    print_msg "$BLUE" "Updating package lists..."
+    
+    # Update system
+    sudo pacman -Syu
+    yay -Syu
+    
+    # Update package lists
+    pacman -Qqen > "$DOTFILES_DIR/packages/pacman.txt"
+    pacman -Qqem > "$DOTFILES_DIR/packages/aur.txt"
+    
+    print_msg "$GREEN" "Package lists updated"
+}
+
+# Function to clean system
+clean_system() {
+    print_msg "$BLUE" "Cleaning system..."
+    
+    # Remove unused packages
+    yay -Rns $(yay -Qdtq)
+    
+    # Clean package cache
+    yay -Sc
+    
+    print_msg "$GREEN" "System cleaned"
+}
+
+# Function to test in clean environment
+test_configs() {
+    print_msg "$BLUE" "Testing configurations..."
+    
+    # Check if Docker is installed
+    if ! command -v docker &> /dev/null; then
+        print_msg "$RED" "Docker is required for testing"
+        exit 1
+    fi
+    
+    # Run test in Docker
+    docker run -it \
+        -v "$DOTFILES_DIR:/root/dotfiles" \
+        archlinux:latest \
+        bash -c "cd /root/dotfiles && ./scripts/install.sh"
+}
 
 # Function to handle menu selection
 handle_menu_selection() {
@@ -103,6 +190,7 @@ if [ $# -eq 0 ]; then
     done
 else
     # Parse multiple flags
+    OPTIND=1
     while getopts "ucsgbith" opt; do
         case $opt in
             u) update_packages ;;
