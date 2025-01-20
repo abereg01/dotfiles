@@ -1,0 +1,27 @@
+# Syntax Colors
+--color=fg:${foreground}
+--color=background:${background}
+--color=line-number:${color8}
+--color=header:${color4},bold
+--color=header-line:${color8}
+
+# Git Colors
+--color=added:${color2}
+--color=deleted:${color1}
+--color=modified:${color3}
+
+# Interface Colors
+--color=grid:${color8}
+--color=title-bar:${color4}
+--color=border:${color8}
+
+# Syntax Highlighting Colors
+--color=comment:${color8},italic
+--color=keyword:${color5},bold
+--color=string:${color2}
+--color=variable:${color6}
+--color=constant:${color5}
+--color=number:${color3}
+--color=function:${color4}
+--color=selection:${selection_background}
+--color=matching:${color4},underline

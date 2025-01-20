@@ -20,4 +20,4 @@ configuration {
     dpi: 96;
 }
 
-@theme "theme.rasi"
+@theme "~/dotfiles/themes/templates/rofi.rasi"

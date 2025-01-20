@@ -1,0 +1,265 @@
+Configuration Collection
+Generated on: 2025-01-17 12:46:22.083929
+Root directory: /home/abe/dotfiles/themes/templates
+================================================================================
+
+File: rofi.rasi
+--------------------------------------------------------------------------------
+* {
+    background-color: var(background);
+    text-color: var(foreground);
+    foreground-colour: var(foreground);
+}
+
+{
+    font: "JetBrainsMono Nerd Font 10";
+    big-font: "JetBrainsMono Nerd Font 20";
+}
+
+{
+    background: #2E3440;
+    foreground: #D8DEE9;
+    foreground-alt: #81A1C1;
+}
+
+configuration {
+    show-icons: true;
+}
+
+window {
+    width: 25%;
+    height: 55%;
+    transparency: "real";
+    padding: 15px 20px 15px 20px;
+}
+
+inputbar {
+    padding: 10px;
+    children: [ "prompt","textbox-prompt-colon","entry"];
+}
+
+prompt {
+    text-color: var(foreground-alt);
+}
+
+textbox-prompt-colon {
+    margin:     0px 4px 0px 0px ;
+    expand:     false;
+    str:        ":";
+}
+
+mainbox {
+    children: ["inputbar", "listview", "mode-switcher"];
+}
+
+entry {
+    cursor:            text;
+    spacing:           0;
+    placeholder-color: Gray;
+    placeholder:       "Type to filter";
+}
+
+listview {
+    padding: 5px;
+    columns: 1;
+    spacing: 1px;
+    lines: 8;
+}
+
+element {
+    enabled:                     true;
+    padding:                     9px;
+    cursor:                      pointer;
+    border-radius: 0px;
+}
+
+element-text {
+    background-color: transparent;
+    cursor:           inherit;
+    highlight:        inherit;
+    text-color:       inherit;
+}
+
+element-icon {
+    background-color:            transparent;
+}
+
+element selected.normal {
+    background-color:            var(foreground-alt);
+    text-color:                  var(background);
+}
+
+element selected.active {
+    background-color:            var(foreground-alt);
+    text-color:                  var(background);
+}
+
+mode-switcher{
+    enabled:                     true;
+    spacing:                     1px;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      0px solid;
+    border-radius:               0px;
+}
+
+button {
+    padding:                     5px 10px;
+    border:                      0px solid;
+    text-color:                  inherit;
+    cursor:                      pointer;
+}
+
+button selected {
+    text-color:     var(foreground-alt);
+}
+
+
+================================================================================
+
+File: bat.conf
+--------------------------------------------------------------------------------
+# Syntax Colors
+--color=fg:${foreground}
+--color=background:${background}
+--color=line-number:${color8}
+--color=header:${color4},bold
+--color=header-line:${color8}
+
+# Git Colors
+--color=added:${color2}
+--color=deleted:${color1}
+--color=modified:${color3}
+
+# Interface Colors
+--color=grid:${color8}
+--color=title-bar:${color4}
+--color=border:${color8}
+
+# Syntax Highlighting Colors
+--color=comment:${color8},italic
+--color=keyword:${color5},bold
+--color=string:${color2}
+--color=variable:${color6}
+--color=constant:${color5}
+--color=number:${color3}
+--color=function:${color4}
+--color=selection:${selection_background}
+--color=matching:${color4},underline
+
+
+================================================================================
+
+File: bspwm.conf
+--------------------------------------------------------------------------------
+#!/bin/sh
+
+# Border colors
+bspc config normal_border_color "${color8}"
+bspc config active_border_color "${color4}"
+bspc config focused_border_color "${color4}"
+bspc config presel_feedback_color "${color4}"
+
+# Save current theme name for other scripts
+bsp_color="${theme_name}"
+
+# You might want to export these variables for other scripts to use
+export BSP_NORMAL_COLOR="${color8}"
+export BSP_ACTIVE_COLOR="${color4}"
+export BSP_FOCUSED_COLOR="${color4}"
+export BSP_PRESEL_COLOR="${color4}"
+
+
+================================================================================
+
+File: polybar.ini
+--------------------------------------------------------------------------------
+[colors]
+background = #2E3440
+foreground = #D8DEE9
+accent = #81A1C1
+alert = #BF616A
+disabled = #707070
+cyan = #88C0D0
+red = #BF616A
+blue = #81A1C1
+magenta = #B48EAD
+yellow = #EBCB8B
+green = #A3BE8C
+
+
+================================================================================
+
+File: kitty.conf
+--------------------------------------------------------------------------------
+foreground            #D8DEE9
+background            #2E3440
+selection_foreground  #000000
+selection_background  #FFFACD
+url_color             #0087BD
+cursor                #81A1C1
+
+# black
+color0   #3B4252
+color8   #4C566A
+
+# red
+color1   #BF616A
+color9   #BF616A
+
+# green
+color2   #A3BE8C
+color10  #A3BE8C
+
+# yellow
+color3   #EBCB8B
+color11  #EBCB8B
+
+# blue
+color4  #81A1C1
+color12 #81A1C1
+
+# magenta
+color5   #B48EAD
+color13  #B48EAD
+
+# cyan
+color6   #88C0D0
+color14  #8FBCBB
+
+# white
+color7   #E5E9F0
+color15  #ECEFF4
+
+
+================================================================================
+
+File: dunst.conf
+--------------------------------------------------------------------------------
+[global]
+frame_color = "${color4}"
+
+# Urgency Low
+[urgency_low]
+background = "${background}"
+foreground = "${foreground}"
+frame_color = "${color4}"
+highlight = "${color4}"
+
+# Urgency Normal
+[urgency_normal]
+background = "${background}"
+foreground = "${foreground}"
+frame_color = "${color4}"
+highlight = "${color4}"
+
+# Urgency Critical
+[urgency_critical]
+background = "${background}"
+foreground = "${color1}"
+frame_color = "${color1}"
+highlight = "${color1}"
+
+
+================================================================================
+

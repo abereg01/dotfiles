@@ -13,6 +13,7 @@ eza
 feh
 firefox
 fish
+fzf
 git
 grub
 gst-plugin-pipewire
@@ -47,6 +48,7 @@ starship
 stow
 sxhkd
 thunar
+timeshift
 unzip
 vim
 wget

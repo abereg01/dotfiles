@@ -1,0 +1,27 @@
+# Syntax Colors
+--color=fg:#e0def4
+--color=background:#191724
+--color=line-number:#6e6a86
+--color=header:#9ccfd8,bold
+--color=header-line:#6e6a86
+
+# Git Colors
+--color=added:#31748f
+--color=deleted:#eb6f92
+--color=modified:#f6c177
+
+# Interface Colors
+--color=grid:#6e6a86
+--color=title-bar:#9ccfd8
+--color=border:#6e6a86
+
+# Syntax Highlighting Colors
+--color=comment:#6e6a86,italic
+--color=keyword:#c4a7e7,bold
+--color=string:#31748f
+--color=variable:#ebbcba
+--color=constant:#c4a7e7
+--color=number:#f6c177
+--color=function:#9ccfd8
+--color=selection:#403d52
+--color=matching:#9ccfd8,underline

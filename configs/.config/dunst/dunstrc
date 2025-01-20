@@ -1,3 +1,5 @@
+include ~/dotfiles/themes/templates/dunst.conf
+
 [global]
     monitor = 0
     follow = none
@@ -54,18 +56,3 @@
 [experimental]
     per_monitor_dpi = false
 
-[urgency_low]
-    background = "#2E3440"
-    foreground = "#D8DEE9"
-    timeout = 5
-
-[urgency_normal]
-    background = "#2E3440"
-    foreground = "#D8DEE9"
-    timeout = 5
-
-[urgency_critical]
-    background = "#2E3440"
-    foreground = "#D8DEE9"
-    frame_color = "#ff5555"
-    timeout = 120
