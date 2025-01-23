@@ -1,0 +1,106 @@
+󱴁# Material Design Icons (Modern Style)
+
+## Web/Browsers
+- 󰇧 - Simple browser
+- 󰈹 - Detailed browser
+- 󰖟 - Earth/web icon
+- 󰇩 - Alternative browser
+
+## Development/Terminal
+- 󰆍 - Terminal
+- 󰡨 - Coding
+- 󰜈 - Command line
+- 󰅨 - IDE/Editor
+
+## Media
+- 󰎆 - Music note
+- 󰋩 - Video player
+- 󰤄 - Streaming
+- 󰈸 - Gallery
+
+## Communication/Social
+- 󰍡 - Chat bubbles
+- 󰆉 - Email
+- 󰭹 - Social network
+- 󰻞 - Community
+
+## Gaming
+- 󰊗 - Gamepad
+- 󰸗 - Gaming console
+- 󱎓 - Arcade
+- 󰺵 - E-sports
+
+## Files/Documents
+- 󰉋 - Folder
+- 󰈙 - Documents
+- 󰧮 - Cloud storage
+- 󱧶 - Archive
+
+## Settings/System
+- 󰒓 - Settings gear
+- 󰐱 - System tools
+- 󱂬 - Control panel
+- 󰆓 - Dashboard
+
+# Font Awesome Icons (Classic Style)
+
+## Web/Browsers
+-  - Browser
+-  - Globe
+-  - Network
+-  - Window
+
+## Development/Terminal
+-  - Terminal
+-  - Code
+-  - Functions
+-  - Console
+
+## Media
+-  - Music
+-  - Video
+-  - Camera
+-  - Images
+
+## Communication/Social
+-  - Messages
+-  - Users
+-  - Share
+-  - Comments
+
+## Gaming
+-  - Gamepad
+-  - Dice
+-  - Trophy
+-  - Puzzle
+
+## Files/Documents
+-  - Folder
+-  - Files
+-  - Archive
+-  - Cloud
+
+## Settings/System
+-  - Cogs
+-  - Sliders
+-  - Tools
+-  - Dashboard
+
+# Example Polybar Configuration
+
+```ini
+[module/workspaces]
+type = internal/xworkspaces
+icon-0 = 1;󰈹
+icon-1 = 2;󰆍
+icon-2 = 3;󰍡
+icon-3 = 4;󰡨
+icon-4 = 5;󰋩
+icon-5 = 6;󰉋
+icon-6 = 7;󰊗
+icon-7 = 8;󰒓
+icon-8 = 9;󱂬
+icon-default = 󰣇
+```
+
+You can mix and match icons from both sets by ensuring you have both fonts installed and properly configured in your polybar config.

@@ -1,0 +1,18 @@
+set icons true
+set previewer ~/.config/lf/preview 
+set cleaner ~/.config/lf/cleaner
+set preview 
+
+#Basic functions
+map <enter> open
+map <backspace2> delete
+map r rename
+map zp :toggle preview
+
+#Quick Movement
+map gc cd ~/.config
+map gd cd ~/dotfiles/configs/
+map gw cd ~/lib/images/wallpapers/
+map gs cd ~/lib/scripts/
+
+

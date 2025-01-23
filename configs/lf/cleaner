@@ -1,0 +1,2 @@
+#!/bin/sh
+kitty +kitten icat --clear --stdin=no --silent --transfer-mode=stream </dev/null >/dev/tty

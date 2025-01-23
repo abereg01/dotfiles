@@ -1,0 +1,69 @@
+#! /bin/sh
+
+# Source configuration
+source $HOME/.config/bspwm/config
+
+## sxhkd start
+pgrep -x sxhkd > /dev/null || sxhkd &
+xsetroot -cursor_name left_ptr &
+
+# Display settings
+xset s off &
+xset -dpms &
+xset s noblank &
+
+# Monitor setup
+xrandr --output DP-4 --primary --mode 3440x1440 --rate 100 --pos 0x0 --output HDMI-0 --mode 3440x1440 --rate 100 --pos 3440x0
+bspc monitor DP-4 -d DP-4_1 DP-4_2 DP-4_3 DP-4_4 DP-4_5
+bspc monitor HDMI-0 -d HDMI-0_1 HDMI-0_2 HDMI-0_3 HDMI-0_4 HDMI-0_5
+
+bsp_remove_unplugged_monitors=false
+bsp_remove_disabled_monitors=false
+
+#BSPWM configuration
+bspc config border_width         2
+bspc config window_gap           5
+bspc config split_ratio          0.5
+bspc config top_padding          0 
+bspc config bottom_padding       0 
+bspc config left_padding         0 
+bspc config right_padding        0 
+bspc config single_monocle       true
+bspc config borderless_monocle   true
+bspc config gapless_monocle      false
+bspc config focus_follows_pointer true
+
+# Window rules
+bspc rule -a feh state=floating
+bspc rule -a kitty:floating_kitty state=floating center=on layer=above
+
+# Colors
+bspc config normal_border_color "$normal_border_color"
+bspc config focused_border_color "$focused_border_color"
+
+# Fix Java Applications
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+#BSPWM coloring
+#bspc config normal_border_color		"#d3c6aa"
+#bspc config active_border_color		"#d3c6aa"
+#bspc config focused_border_color	"#a7c080"
+bspc config presel_feedback_color	"#ff9e64"
+bspc config urgent_border_color 	"#dd2727"
+
+# Keyboard layout
+setxkbmap us 
+
+# Autostart
+xsettingsd &
+dunst &
+picom &
+unclutter &
+udiskie &
+
+# User interface
+$HOME/.fehbg &
+$HOME/dotfiles/configs/polybar/launch.sh &
+
+# Start SSH agent
+eval "$(ssh-agent -s)" &

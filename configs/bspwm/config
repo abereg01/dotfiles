@@ -1,0 +1,8 @@
+# File: ~/.config/bspwm/config
+# BSPWM Configuration Variables
+
+# Appearance
+bsp_color="rosepine"
+normal_border_color="#26233a"
+focused_border_color="#9ccfd8"
+

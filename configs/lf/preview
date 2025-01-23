@@ -1,0 +1,15 @@
+#!/bin/sh
+
+image() {
+    kitty +kitten icat --silent --transfer-mode=stream --stdin=no \
+        --place="${2}x${3}@${4}x${5}" "$1" </dev/null >/dev/tty
+}
+
+case "$(file -Lb --mime-type "$1")" in
+    image/*)
+        image "$1" "$2" "$3" "$4" "$5"
+        ;;
+    *)
+        bat --color always "$1"
+        ;;
+esac

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Colors (replace with your color variables)
+BG="#1e1e2e"
+FG="#cdd6f4"
+HIGHLIGHT="#89b4fa"
+
+# Command to run bemenu with your colors and settings
+bemenu_run() {
+    bemenu-run \
+        --fn "Symbols Nerd Font 12" \
+        --fb "$BG" --ff "$FG" \
+        --nb "$BG" --nf "$FG" \
+        --hb "$HIGHLIGHT" --hf "$BG" \
+        --tb "$HIGHLIGHT" --tf "$BG" \
+        --list 10 \
+        --prompt "Run: "
+}
+
+bemenu_run

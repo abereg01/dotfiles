@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-rule() { bspc rule -a {$@} }
-
-# user specific rules
-# usage: rule [command] state=[state]
-#
-bspc rule -a kitty:floating_kitty state=floating center=on layer=above
