@@ -33,6 +33,27 @@ local plugins = {
     "lewis6991/gitsigns.nvim",
     lazy = false,
   },
+  {
+    "kevinhwang91/nvim-bqf", -- Better quickfix
+    event = "VeryLazy",
+  },
+    {
+    "chrisbra/csv.vim", -- CSV handling
+    ft = "csv",
+  },
+  {
+    "mhinz/vim-ssh",
+    lazy = false,
+    config = function()
+      vim.g.ssh_configurations = {
+        ["DSM01"] = "172.20.0.21"
+      }
+    end
+  },  
+  {
+    "preservim/vimux",
+    lazy = false,
+  },
 }
 
 return plugins

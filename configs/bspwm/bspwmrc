@@ -60,6 +60,7 @@ dunst &
 picom &
 unclutter &
 udiskie &
+$HOME/lib/scripts/wm/bspwm/startup-terminals
 
 # User interface
 $HOME/.fehbg &
