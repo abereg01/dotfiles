@@ -18,14 +18,14 @@ super + space
 
 # power menu
 super + BackSpace
-    sh ~/startup-terminals
-
-super + shift + BackSpace
-    sh ~/terminals_left
+    sh ~/lib/scripts/wm/bspwm/color
 
 # window menu
 super + Tab
     bspc monitor -f next 
+
+super + x 
+  betterlockscreen --lock blur
 
 # make sxhkd reload its configuration files
 super + Escape

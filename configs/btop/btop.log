@@ -4,3 +4,12 @@
 
 2024/10/01 (15:25:24) | ===> btop++ v.1.4.0
 2024/10/01 (15:25:24) | WARNING: Intel GPU: Failed to initialize PMU
+
+2025/01/29 (12:29:49) | ===> btop++ v.1.4.0
+2025/01/29 (12:29:49) | ERROR: Invalid RGB decimal value: "theme[graph_text]=#f8f8f2"
+
+2025/01/29 (12:47:33) | ===> btop++ v.1.4.0
+2025/01/29 (12:47:33) | ERROR: Invalid RGB decimal value: "theme[graph_text]=#f8f8f2"
+
+2025/01/29 (12:47:52) | ===> btop++ v.1.4.0
+2025/01/29 (12:47:52) | ERROR: Invalid RGB decimal value: "theme[graph_text]=#e0def4"

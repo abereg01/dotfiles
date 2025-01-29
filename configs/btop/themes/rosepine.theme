@@ -1,0 +1,12 @@
+theme[main_bg]=#191724
+theme[main_fg]=#e0def4
+theme[title]=#9ccfd8
+theme[hi_fg]=#ebbcba
+theme[selected_bg]=#9ccfd8
+theme[selected_fg]=#191724
+theme[inactive_fg]=
+theme[graph_text]=#e0def4
+theme[meter_bg]=#26233a
+theme[process_start]=#31748f
+theme[process_mid]=#f6c177
+theme[process_end]=#eb6f92
