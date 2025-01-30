@@ -49,7 +49,7 @@ local plugins = {
         ["DSM01"] = "172.20.0.21"
       }
     end
-  },  
+  },
   {
     "preservim/vimux",
     lazy = false,

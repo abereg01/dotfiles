@@ -10,7 +10,7 @@ super + Return
     kitty
 
 super + shift + Return
-    kitty --class float,float -o initial_window_width=25c -o initial_window_height=100c
+    kitty --name float --class float   
 
 # program launcher
 super + space
@@ -30,6 +30,10 @@ super + x
 # make sxhkd reload its configuration files
 super + Escape
     pkill -USR1 -x sxhkd; notify-send 'sxhkd restarted'
+
+# Language
+super + alt + l 
+  sh ~/lib/scripts/wm/bspwm/language
 
 # quit/restart bspwm
 super + alt + {q,r}
