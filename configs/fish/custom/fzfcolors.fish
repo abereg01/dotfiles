@@ -1,14 +1,14 @@
 # Color configuration
-set -g color_background #282a36
-set -g color_foreground #f8f8f2
-set -g color_black #21222c
-set -g color_red #ff5555
-set -g color_green #50fa7b
-set -g color_yellow #f1fa8c
-set -g color_blue #bd93f9
-set -g color_magenta #ff79c6
-set -g color_cyan #8be9fe
-set -g color_white #f8f8f2
+set -g color_background #191724
+set -g color_foreground #e0def4
+set -g color_black #26233a
+set -g color_red #eb6f92
+set -g color_green #31748f
+set -g color_yellow #f6c177
+set -g color_blue #9ccfd8
+set -g color_magenta #c4a7e7
+set -g color_cyan #ebbcba
+set -g color_white #e0def4
 
 # Additional color mappings for fzf
 set -g color_fg $color_foreground

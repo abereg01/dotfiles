@@ -66,6 +66,3 @@ nm-applet &
 # User interface
 $HOME/.fehbg &
 $HOME/dotfiles/configs/polybar/launch.sh &
-
-# Start SSH agent
-eval "$(ssh-agent -s)" &
