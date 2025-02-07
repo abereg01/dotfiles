@@ -13,9 +13,9 @@ xset -dpms &
 xset s noblank &
 
 # Monitor setup
-xrandr --output DP-4 --primary --mode 3440x1440 --rate 100 --pos 0x0 --output HDMI-0 --mode 3440x1440 --rate 100 --pos 3440x0
+xrandr --output DP-4 --primary --mode 3440x1440 --rate 100 --pos 0x0 --output DP-2 --mode 3440x1440 --rate 100 --pos 0x-1440
 bspc monitor DP-4 -d DP-4_1 DP-4_2 DP-4_3 DP-4_4 DP-4_5
-bspc monitor HDMI-0 -d HDMI-0_1 HDMI-0_2 HDMI-0_3 HDMI-0_4 HDMI-0_5
+bspc monitor DP-2 -d DP-2_1 DP-2_2 DP-2_3 DP-2_4 DP-2_5
 
 bsp_remove_unplugged_monitors=false
 bsp_remove_disabled_monitors=false
@@ -66,3 +66,4 @@ nm-applet &
 # User interface
 $HOME/.fehbg &
 $HOME/dotfiles/configs/polybar/launch.sh &
+#$HOME/lib/scripts/wm/bspwm/startup-terminals

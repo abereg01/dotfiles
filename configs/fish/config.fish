@@ -14,3 +14,5 @@ source ~/.config/fish/custom/fzfcolorapply.fish
 
 # Initialize starship
 starship init fish | source
+
+rxfetch
