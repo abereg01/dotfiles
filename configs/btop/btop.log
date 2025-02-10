@@ -39,3 +39,6 @@
 2025/02/06 (11:36:29) | ===> btop++ v.1.4.0
 2025/02/06 (11:36:29) | ERROR: Invalid RGB decimal value: "theme[graph_text]=#e0def4"
 2025/02/06 (11:36:46) | WARNING: Failed to join _runner thread on exit!
+
+2025/02/10 (07:42:37) | ===> btop++ v.1.4.0
+2025/02/10 (07:42:37) | ERROR: Invalid RGB decimal value: "theme[graph_text]=#b8c0e0"

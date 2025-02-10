@@ -1,0 +1,58 @@
+# Ncspot keybindings configuration
+
+[keybindings]
+# Playback controls
+"Space" = "playpause"  # Play/Pause toggle
+"p" = "playpause"      # Alternative Play/Pause
+"s" = "stop"           # Stop playback
+"n" = "next"           # Next track
+"b" = "previous"       # Previous track
+"r" = "repeat"         # Cycle repeat modes
+"z" = "shuffle"        # Toggle shuffle
+
+# Volume controls
+"=" = "volup"          # Volume up
+"-" = "voldown"        # Volume down
+
+# Navigation
+"q" = "back"           # Go back
+"h" = "focus library"  # Focus library
+"/" = "focus search"   # Focus search
+"?" = "help"           # Show help
+
+# Playlist and Queue Management
+"Enter" = "play"       # Play selected
+"a" = "goto artist"    # Go to artist
+"d" = "delete"         # Delete from playlist/queue
+"D" = "delete"         # Alternative delete
+"S" = "save"           # Save to playlist
+"o" = "open"           # Open context menu
+"O" = "open"           # Alternative open
+
+# Library Navigation
+"G" = "move bottom"    # Move to bottom
+"g" = "move top"       # Move to top
+"J" = "move down 5"    # Move down 5 items
+"K" = "move up 5"      # Move up 5 items
+"j" = "move down"      # Move down
+"k" = "move up"        # Move up
+
+# Queue Management
+"A" = "queue"          # Add to queue
+"c" = "clear"          # Clear queue
+"F" = "seek +5000"     # Seek forward 5 seconds
+"B" = "seek -5000"     # Seek backward 5 seconds
+
+# Sorting and View Controls
+"t" = "sort added d"   # Sort by date added (descending)
+"w" = "sort name"      # Sort by name
+"l" = "sort length"    # Sort by length
+"m" = "sort modified"  # Sort by modified date
+"1" = "focus queue"    # Focus queue
+"2" = "focus library"  # Focus library
+"3" = "focus search"   # Focus search
+
+# Other Controls
+"Q" = "quit"           # Quit application
+"U" = "update"         # Update library
+"x" = "jump"           # Jump to playing track
