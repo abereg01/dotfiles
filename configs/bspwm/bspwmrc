@@ -13,10 +13,9 @@ xset -dpms &
 xset s noblank &
 
 # Monitor setup
-#xrandr --output DP-4 --primary --mode 3440x1440 --rate 100 --pos 0x0 --output DP-2 --mode 3440x1440 --rate 100 --pos 0x-1440 --output DP-0 --mode 3440x1440 --rate 60 --pos 3440x0
-xrandr --output DP-4 --primary --mode 3440x1440 --rate 100 --pos 3840x0 \
-       --output DP-2 --mode 3440x1440 --rate 100 --pos 3840x-1440 \
-       --output DP-0 --mode 3840x2160 --rate 60 --pos 0x0
+xrandr --output DP-4 --primary --mode 3440x1440 --rate 100 --pos 3850x1440 \
+       --output DP-2 --mode 3440x1440 --rate 100 --pos 3850x0 \
+       --output DP-0 --mode 3840x2160 --rate 60 --pos 0x720
 
 bspc monitor DP-4 -d DP-4_1 DP-4_2 DP-4_3 DP-4_4 DP-4_5
 bspc monitor DP-2 -d DP-2_1 DP-2_2 DP-2_3 DP-2_4 DP-2_5
@@ -25,10 +24,10 @@ bsp_remove_unplugged_monitors=false
 bsp_remove_disabled_monitors=false
 
 #BSPWM configuration
-bspc config border_width         2
-bspc config window_gap           5
+bspc config border_width         3
+bspc config window_gap           20
 bspc config split_ratio          0.5
-bspc config top_padding          0 
+bspc config top_padding          20 
 bspc config bottom_padding       0 
 bspc config left_padding         0 
 bspc config right_padding        0 

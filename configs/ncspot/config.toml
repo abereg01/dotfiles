@@ -4,11 +4,11 @@
 # Playback controls
 "Space" = "playpause"  # Play/Pause toggle
 "p" = "playpause"      # Alternative Play/Pause
-"s" = "stop"           # Stop playback
+"z" = "stop"           # Stop playback
 "n" = "next"           # Next track
 "b" = "previous"       # Previous track
 "r" = "repeat"         # Cycle repeat modes
-"z" = "shuffle"        # Toggle shuffle
+"s" = "shuffle"        # Toggle shuffle
 
 # Volume controls
 "=" = "volup"          # Volume up
