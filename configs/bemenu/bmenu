@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Colors (replace with your color variables)
-BG="#24273a"
-FG="#cad3f5"
-HIGHLIGHT="#8aadf4"
+BG="#191724"
+FG="#e0def4"
+HIGHLIGHT="#9ccfd8"
 
 # Command to run bemenu with your colors and settings
 bemenu_run() {
