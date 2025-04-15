@@ -54,3 +54,6 @@
 
 2025/03/10 (08:24:17) | ===> btop++ v.1.4.0
 2025/03/10 (08:24:17) | ERROR: Invalid RGB decimal value: "theme[graph_text]=#E5E9F0"
+
+2025/04/14 (10:21:41) | ===> btop++ v.1.4.0
+2025/04/14 (10:21:41) | ERROR: Invalid RGB decimal value: "theme[graph_text]=#b8c0e0"

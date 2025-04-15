@@ -25,7 +25,8 @@ super + Tab
     bspc monitor -f next 
 
 super + x 
-  betterlockscreen --lock blur
+  sh /home/abe/lib/scripts/wm/bspwm/lockscreen.sh
+  #betterlockscreen --lock blur
 
 # make sxhkd reload its configuration files
 super + Escape

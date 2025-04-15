@@ -14,4 +14,10 @@ source ~/.config/fish/custom/fzfcolorapply.fish
 # Initialize starship
 starship init fish | source
 
-#rxfetch
+# k8s
+set -x TALOSCONFIG ~/.talos/config
+set -x KUBECONFIG ~/.kube/config
+
+# rxfetch
+set -x GOPATH $HOME/go
+set -x PATH $PATH $GOPATH/bin
