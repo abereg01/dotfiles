@@ -17,6 +17,8 @@ starship init fish | source
 # k8s
 set -x TALOSCONFIG ~/.talos/config
 set -x KUBECONFIG ~/.kube/config
+set -gx KUBE_EDITOR "nvim"
+set -Ux EDITOR nvim
 
 # rxfetch
 set -x GOPATH $HOME/go

@@ -15,7 +15,7 @@ xset s noblank &
 # Monitor setup
 xrandr --output DP-4 --primary --mode 3440x1440 --rate 100 --pos 3850x1440 \
        --output DP-2 --mode 3440x1440 --rate 100 --pos 3850x0 \
-#       --output DP-0 --mode 3840x2160 --rate 60 --pos 0x720
+       --output DP-0 --mode 3840x2160 --rate 60 --pos 0x720
 
 bspc monitor DP-4 -d DP-4_1 DP-4_2 DP-4_3 DP-4_4 DP-4_5
 bspc monitor DP-2 -d DP-2_1 DP-2_2 DP-2_3 DP-2_4 DP-2_5
