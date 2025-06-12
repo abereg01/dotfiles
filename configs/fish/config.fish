@@ -21,5 +21,4 @@ set -gx KUBE_EDITOR "nvim"
 set -Ux EDITOR nvim
 
 # rxfetch
-set -x GOPATH $HOME/go
-set -x PATH $PATH $GOPATH/bin
+set -gx PATH $HOME/.gem/ruby/3.4.0/bin $GOPATH/bin $PATH

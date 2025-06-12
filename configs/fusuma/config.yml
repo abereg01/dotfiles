@@ -1,0 +1,16 @@
+swipe:
+  3:
+    left:
+      command: 'hyprctl dispatch workspace e+1'
+    right:
+      command: 'hyprctl dispatch workspace e-1'
+    up:
+      command: 'rofi-wayland'
+    down:
+      command: 'rofi-wayland'
+
+threshold:
+  swipe: 0.3
+
+interval:
+  swipe: 0.8

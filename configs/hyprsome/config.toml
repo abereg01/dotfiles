@@ -1,0 +1,6 @@
+[main]
+monitors = ["DP-1", "DP-2", "DP-3"]
+workspace_bindings = [1, 2, 3, 4, 5]
+
+[bindings]
+mod = "SUPER"
