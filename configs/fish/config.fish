@@ -14,11 +14,15 @@ source ~/.config/fish/custom/fzfcolorapply.fish
 # Initialize starship
 starship init fish | source
 
+# Zoxide (better cd)
+zoxide init fish | source
+
+
 # k8s
 set -x TALOSCONFIG ~/.talos/config
 set -x KUBECONFIG ~/.kube/config
 set -gx KUBE_EDITOR "nvim"
 set -Ux EDITOR nvim
 
-# rxfetch
+
 set -gx PATH $HOME/.gem/ruby/3.4.0/bin $GOPATH/bin $PATH
