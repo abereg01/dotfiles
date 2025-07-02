@@ -12,9 +12,8 @@ split-monitor-workspaces &
 # Services
 swww-daemon &
 dunst &
-fusuma &
 udiskie &
 nm-applet &
 polkit-kde-authentication-agent-1 &
 waybar &
-
+hypridle &
