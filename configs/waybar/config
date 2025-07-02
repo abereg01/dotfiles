@@ -11,12 +11,9 @@
         "clock"
     ],
     "modules-right": [
-        "tray",
         "memory",
         "network",
         "wireplumber",
-        "battery",
-        "custom/power"
     ],
     "wlr/taskbar": {
         "format": "{icon}",
