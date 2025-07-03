@@ -1,0 +1,120 @@
+# File: ~/.config/bspwm/sxhkdrc
+# Combined key bindings from both configs
+
+#
+# wm independent hotkeys
+#
+
+# terminal emulator
+super + Return
+    kitty
+
+super + shift + Return
+    kitty --name float --class float   
+
+# program launcher
+super + space
+    sh ~/dotfiles/configs/bemenu/bmenu
+
+# power menu
+super + BackSpace
+    sh ~/lib/scripts/wm/bspwm/color
+
+# window menu
+super + Tab
+    bspc monitor -f next 
+
+super + x 
+  sh /home/abe/lib/scripts/wm/bspwm/lockscreen.sh
+  #betterlockscreen --lock blur
+
+# make sxhkd reload its configuration files
+super + Escape
+    pkill -USR1 -x sxhkd; notify-send 'sxhkd restarted'
+
+# Language
+super + alt + l 
+  sh ~/lib/scripts/wm/bspwm/language
+
+# quit/restart bspwm
+super + alt + {q,r}
+    bspc {quit,wm -r}
+
+# close and kill
+super + {_,shift + }w
+    bspc node -{c,k}
+
+alt + {_,shift + }F4
+    bspc node -{c,k}
+
+# Focus or send to the given desktop on the focused monitor
+#super + {_,shift + }{1-9}
+#    bspc {desktop -f,node -d} '^{1-9}'
+
+# Switch to workspace (1-5) on focused monitor
+super + {1-5}
+    bspc desktop -f $(bspc query -M -m focused):^{1-5}
+
+# Move window to workspace (1-5) on focused monitor
+super + shift + {1-5}
+    bspc node -d $(bspc query -M -m focused):^{1-5}
+
+# toggle fullscreen/floating
+super + {t,shift + t,s,f}
+    bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# focus/swap windows
+super + {_,shift + }{h,j,k,l}
+    bspc node -{f,s} {west,south,north,east}
+
+super + {_,shift + }{Left,Down,Up,Right}
+    bspc node -{f,s} {west,south,north,east}
+
+# focus or send to the given desktop
+super + {_,shift + }{1-9,0}
+    bspc {desktop -f,node -d} '^{1-9,10}'
+
+# preselect
+super + ctrl + {h,j,k,l}
+    bspc node -p {west,south,north,east}
+
+super + ctrl + {Left,Down,Up,Right}
+    bspc node -p {west,south,north,east}
+
+# cancel preselect
+super + ctrl + space
+    bspc node -p cancel
+
+# resize windows
+super + alt + {h,j,k,l}
+    bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+super + alt + {Left,Down,Up,Right}
+    bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# volume control
+XF86Audio{RaiseVolume,LowerVolume,Mute}
+    wpctl set-{volume @DEFAULT_AUDIO_SINK@ 5%{+,-} --limit 1,mute @DEFAULT_AUDIO_SINK@ toggle}
+
+# brightness control
+XF86MonBrightness{Up,Down}
+    brightnessctl s 10{+,-}
+
+# media controls
+XF86Audio{Play,Next,Prev,Stop}
+    playerctl {play-pause,next,previous,stop}
+
+# screenshot
+Print
+    escrotum ~/Pictures/Screenshots/'%Y-%m-%d-%H%M%S_$wx$h_escrotum.png'
+
+super + shift + Print
+    escrotum -s ~/Pictures/Screenshots/'%Y-%m-%d-%H%M%S_$wx$h_escrotum.png'
+
+# lock screen
+super + shift + l
+    betterlockscreen -l
+
+# toggle polybar
+super + p
+    sh ~/.config/bspwm/scripts/polybar-toggle.sh
