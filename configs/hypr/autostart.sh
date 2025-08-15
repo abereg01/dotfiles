@@ -9,9 +9,9 @@ exec-once: swww init
 
 # Services
 swww-daemon &
-dunst &
 udiskie &
 nm-applet &
 polkit-kde-authentication-agent-1 &
+swaync &
 waybar &
 hypridle &
