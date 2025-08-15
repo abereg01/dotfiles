@@ -1,0 +1,232 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# ── Paths ──────────────────────────────────────────────────────────────────────
+COLOR_DIR="$HOME/dotfiles/theme/colors"
+CONFIG_DIR="$HOME/.config"
+BEMENU_RC="$HOME/dotfiles/configs/bemenu/bmenu"
+NVCHAD_RC="$HOME/dotfiles/configs/nvim/lua/chadrc.lua"
+
+is_cmd() { command -v "$1" >/dev/null 2>&1; }
+f_exists() { [[ -f "$1" ]]; }
+d_exists() { [[ -d "$1" ]]; }
+
+# Are we inside a Hyprland session?
+IN_HYPR=false
+if is_cmd hyprctl && hyprctl -j monitors >/dev/null 2>&1; then
+  IN_HYPR=true
+fi
+
+# ── Theme chooser ──────────────────────────────────────────────────────────────
+list_colorschemes() {
+  find "$COLOR_DIR" -mindepth 1 -maxdepth 1 -type d -printf "%f\n" | sort
+}
+
+select_color() {
+  if is_cmd kitty; then
+    kitty --name float --class float \
+      -o remember_window_size=no \
+      -o initial_window_width=100c \
+      -o initial_window_height=20c \
+      -e fish -c "find \"$COLOR_DIR\" -mindepth 1 -maxdepth 1 -type d -printf \"%f\n\" | sort | \
+      fzf --header=\"Select Theme\" --preview=\"$HOME/lib/scripts/wm/bspwm/preview_theme.sh {}\" \
+      --preview-window=top:8 > /tmp/selected_theme.txt" 2>/dev/null || true
+    [[ -f /tmp/selected_theme.txt ]] && cat /tmp/selected_theme.txt && rm -f /tmp/selected_theme.txt
+  else
+    list_colorschemes | fzf
+  fi
+}
+
+color="$(select_color)"
+[[ -z "$color" ]] && exit 0
+[[ -d "$COLOR_DIR/$color" ]] || { echo "Invalid color scheme: $color"; exit 1; }
+
+# ── Read palette ───────────────────────────────────────────────────────────────
+conf_file="$COLOR_DIR/$color/$color.conf"
+if ! f_exists "$conf_file"; then
+  echo "Color configuration file not found: $conf_file"
+  exit 1
+fi
+
+background=$(grep -E '^background\b' "$conf_file" | awk '{print $2}')
+foreground=$(grep -E '^foreground\b' "$conf_file" | awk '{print $2}')
+color0=$(grep -E '^color0\b' "$conf_file" | awk '{print $2}')
+color1=$(grep -E '^color1\b' "$conf_file" | awk '{print $2}')
+color2=$(grep -E '^color2\b' "$conf_file" | awk '{print $2}')
+color3=$(grep -E '^color3\b' "$conf_file" | awk '{print $2}')
+color4=$(grep -E '^color4\b' "$conf_file" | awk '{print $2}')
+color5=$(grep -E '^color5\b' "$conf_file" | awk '{print $2}')
+color6=$(grep -E '^color6\b' "$conf_file" | awk '{print $2}')
+color7=$(grep -E '^color7\b' "$conf_file" | awk '{print $2}')
+
+# ── Wallpaper helpers ──────────────────────────────────────────────────────────
+# pick first image from theme's wall dir, recursively, following symlinks
+pick_wall() {
+  local path="$COLOR_DIR/$color/wall"
+  if [[ -d "$path" ]]; then
+    find -L "$path" -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) \
+      | sort | head -n1
+  elif [[ -f "$path" ]]; then
+    echo "$path"
+  else
+    echo ""
+  fi
+}
+
+# Create a symlink in ~/.cache with a proper extension for extensionless images
+link_with_ext() {
+  local src="$1"
+  [[ -f "$src" ]] || { echo ""; return 1; }
+  local mime ext
+  mime=$(file --mime-type -b "$src")
+  case "$mime" in
+    image/jpeg) ext=jpg ;;
+    image/png)  ext=png ;;
+    image/webp) ext=webp ;;
+    *) echo ""; return 2 ;;
+  esac
+
+  local cache="$HOME/.cache/colors/walls"
+  mkdir -p "$cache"
+  local filehash
+  filehash=$(printf "%s" "$src" | sha1sum | awk '{print $1}')
+  local link="$cache/$filehash.$ext"
+  [[ -e "$link" ]] || ln -s "$src" "$link"
+  printf "%s" "$link"
+}
+
+WALL="$(pick_wall)"
+if [[ -z "$WALL" ]]; then
+  echo "No wallpaper image found under $COLOR_DIR/$color/wall"
+fi
+
+# ── App theming ────────────────────────────────────────────────────────────────
+# kitty
+if d_exists "$CONFIG_DIR/kitty" && f_exists "$conf_file"; then
+  cp "$conf_file" "$CONFIG_DIR/kitty/theme.conf" || true
+  pkill -SIGUSR1 -x kitty 2>/dev/null || true
+fi
+
+# dunst
+if f_exists "$CONFIG_DIR/dunst/dunstrc"; then
+  sed -i -e "s/^ *background *= *.*/background = \"$background\"/g" \
+         -e "s/^ *foreground *= *.*/foreground = \"$foreground\"/g" \
+         "$CONFIG_DIR/dunst/dunstrc" || true
+  pkill -HUP dunst 2>/dev/null || true
+fi
+
+# btop
+if f_exists "$CONFIG_DIR/btop/btop.conf"; then
+  mkdir -p "$CONFIG_DIR/btop/themes"
+  sed -i "s/color_theme = \".*\"/color_theme = \"$color\"/" "$CONFIG_DIR/btop/btop.conf" || true
+  cat > "$CONFIG_DIR/btop/themes/$color.theme" << EOF
+theme[main_bg]=$background
+theme[main_fg]=$foreground
+theme[title]=$color4
+theme[hi_fg]=$color6
+theme[selected_bg]=$color4
+theme[selected_fg]=$background
+theme[inactive_fg]=$color7
+theme[graph_text]=$color7
+theme[meter_bg]=$color0
+theme[process_start]=$color2
+theme[process_mid]=$color3
+theme[process_end]=$color1
+EOF
+fi
+
+# lf
+mkdir -p "$CONFIG_DIR/lf"
+cat > "$CONFIG_DIR/lf/colors" << EOF
+di $color4
+fi $foreground
+ln $color6
+ex $color2
+or $color1
+EOF
+
+# bemenu
+if f_exists "$BEMENU_RC"; then
+  sed -i -e "s/BG=\"[^\"]*\"/BG=\"$background\"/g" \
+         -e "s/FG=\"[^\"]*\"/FG=\"$foreground\"/g" \
+         -e "s/HIGHLIGHT=\"[^\"]*\"/HIGHLIGHT=\"$color4\"/g" \
+         "$BEMENU_RC" || true
+fi
+
+# NvChad
+get_nvchad_theme() {
+  case "$1" in
+    dracula) echo "chadracula" ;;
+    gruvbox) echo "gruvchad" ;;
+    *)       echo "$1" ;;
+  esac
+}
+if f_exists "$NVCHAD_RC"; then
+  nvchad_theme="$(get_nvchad_theme "$color")"
+  sed -i "s/theme = \"[^\"]*\"/theme = \"$nvchad_theme\"/" "$NVCHAD_RC" || true
+  NVIM_SERVER="$HOME/.cache/nvim/nvchad_pipe"
+  if [ -S "$NVIM_SERVER" ]; then
+    nvim --server "$NVIM_SERVER" --remote-send "<cmd>lua require('base46').load_all_highlights(); vim.cmd('redraw!')<CR>" || true
+  elif is_cmd nvim; then
+    nvim --headless +"lua require('base46').load_all_highlights()" +q || true
+  fi
+fi
+
+# fish fzf colors
+mkdir -p "$CONFIG_DIR/fish/custom"
+cat > "$CONFIG_DIR/fish/custom/fzfcolors.fish" << EOF
+set -g color_background $background
+set -g color_foreground $foreground
+set -g color_black $color0
+set -g color_red $color1
+set -g color_green $color2
+set -g color_yellow $color3
+set -g color_blue $color4
+set -g color_magenta $color5
+set -g color_cyan $color6
+set -g color_white $color7
+EOF
+
+# ── BSPWM/polybar only if present (and not in Hyprland) ───────────────────────
+if ! "$IN_HYPR"; then
+  if f_exists "$CONFIG_DIR/bspwm/config"; then
+    sed -i -e "s/bspc config normal_border_color .*/bspc config normal_border_color \"$color0\"/g" \
+           -e "s/bspc config focused_border_color .*/bspc config focused_border_color \"$color4\"/g" \
+           -e "s/bsp_color=.*/bsp_color=$color/g" \
+           "$CONFIG_DIR/bspwm/config" || true
+  fi
+  if f_exists "$HOME/.config/polybar/colors.ini"; then
+    sed -i -e "s/^background = .*/background = $background/g" \
+           -e "s/^foreground = .*/foreground = $foreground/g" \
+           -e "s/^accent = .*/accent = $color4/g" \
+           -e "s/^alert = .*/alert = $color1/g" \
+           "$HOME/.config/polybar/colors.ini" || true
+  fi
+fi
+
+# ── Hyprland wallpapers with swww (handles extensionless files) ───────────────
+if "$IN_HYPR" && [[ -n "${WALL:-}" ]] && is_cmd swww; then
+  swww query >/dev/null 2>&1 || (swww-daemon &>/dev/null & disown; sleep 0.3)
+
+  IMG="$(link_with_ext "$WALL")"
+  [[ -n "$IMG" ]] || IMG="$WALL"
+
+  if is_cmd jq; then
+    hyprctl -j monitors | jq -r '.[].name' | while read -r mon; do
+      swww img -o "$mon" "$IMG" \
+        --transition-type grow \
+        --transition-duration 1 \
+        --transition-fps 60 || true
+    done
+  else
+    swww img "$IMG" \
+      --transition-type grow \
+      --transition-duration 1 \
+      --transition-fps 60 || true
+  fi
+fi
+
+# ── Done ───────────────────────────────────────────────────────────────────────
+is_cmd notify-send && notify-send "Theme applied" "$color" || true
+echo "Applied theme: $color"
+
