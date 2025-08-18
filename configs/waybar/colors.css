@@ -1,0 +1,5 @@
+:root { --bg:#2f383e; --fg:#d3c6aa; --blue:#7fbbb3; --cyan:#83c092; --red:#e67e80; --yellow:#dbbc7f; --green:#a7c080; --magenta:#d699b6; --black:#374247; --radius:12px; }
+window#waybar { background: var(--bg); color: var(--fg); font-family: "JetBrains Mono", monospace; }
+#workspaces button { padding: 4px 8px; margin: 0 4px; border-radius: var(--radius); background: transparent; }
+#workspaces button.active { background: rgba(255,255,255,0.08); }
+#clock, #pulseaudio, #network, #battery, #tray { padding: 0 10px; margin: 0 6px; border-radius: var(--radius); background: rgba(0,0,0,0.1); }

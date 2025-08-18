@@ -11,19 +11,18 @@ is_cmd() { command -v "$1" >/dev/null 2>&1; }
 f_exists() { [[ -f "$1" ]]; }
 d_exists() { [[ -d "$1" ]]; }
 
-# Are we inside a Hyprland session?
 IN_HYPR=false
 if is_cmd hyprctl && hyprctl -j monitors >/dev/null 2>&1; then
   IN_HYPR=true
 fi
 
-# ── Theme chooser ──────────────────────────────────────────────────────────────
+# ── Theme chooser (supports arg; safe fallbacks) ───────────────────────────────
 list_colorschemes() {
   find "$COLOR_DIR" -mindepth 1 -maxdepth 1 -type d -printf "%f\n" | sort
 }
-
 select_color() {
-  if is_cmd kitty; then
+  if [[ $# -ge 1 ]] && [[ -d "$COLOR_DIR/$1" ]]; then echo "$1"; return; fi
+  if is_cmd kitty && is_cmd fish && is_cmd fzf; then
     kitty --name float --class float \
       -o remember_window_size=no \
       -o initial_window_width=100c \
@@ -31,22 +30,18 @@ select_color() {
       -e fish -c "find \"$COLOR_DIR\" -mindepth 1 -maxdepth 1 -type d -printf \"%f\n\" | sort | \
       fzf --header=\"Select Theme\" --preview=\"$HOME/lib/scripts/wm/bspwm/preview_theme.sh {}\" \
       --preview-window=top:8 > /tmp/selected_theme.txt" 2>/dev/null || true
-    [[ -f /tmp/selected_theme.txt ]] && cat /tmp/selected_theme.txt && rm -f /tmp/selected_theme.txt
-  else
-    list_colorschemes | fzf
+    [[ -f /tmp/selected_theme.txt ]] && cat /tmp/selected_theme.txt && rm -f /tmp/selected_theme.txt && return
   fi
+  if is_cmd fzf; then list_colorschemes | fzf --header="Select Theme (fallback)"; else list_colorschemes | head -n1; fi
 }
-
-color="$(select_color)"
-[[ -z "$color" ]] && exit 0
+color="$(select_color "${1:-}")"
+[[ -z "$color" ]] && { echo "No theme selected."; exit 0; }
+echo "Selected theme: $color"
 [[ -d "$COLOR_DIR/$color" ]] || { echo "Invalid color scheme: $color"; exit 1; }
 
 # ── Read palette ───────────────────────────────────────────────────────────────
 conf_file="$COLOR_DIR/$color/$color.conf"
-if ! f_exists "$conf_file"; then
-  echo "Color configuration file not found: $conf_file"
-  exit 1
-fi
+[[ -f "$conf_file" ]] || { echo "Color configuration file not found: $conf_file"; exit 1; }
 
 background=$(grep -E '^background\b' "$conf_file" | awk '{print $2}')
 foreground=$(grep -E '^foreground\b' "$conf_file" | awk '{print $2}')
@@ -60,54 +55,33 @@ color6=$(grep -E '^color6\b' "$conf_file" | awk '{print $2}')
 color7=$(grep -E '^color7\b' "$conf_file" | awk '{print $2}')
 
 # ── Wallpaper helpers ──────────────────────────────────────────────────────────
-# pick first image from theme's wall dir, recursively, following symlinks
 pick_wall() {
   local path="$COLOR_DIR/$color/wall"
   if [[ -d "$path" ]]; then
-    find -L "$path" -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) \
-      | sort | head -n1
+    find -L "$path" -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) | sort | head -n1
   elif [[ -f "$path" ]]; then
     echo "$path"
   else
     echo ""
   fi
 }
-
-# Create a symlink in ~/.cache with a proper extension for extensionless images
 link_with_ext() {
-  local src="$1"
-  [[ -f "$src" ]] || { echo ""; return 1; }
-  local mime ext
-  mime=$(file --mime-type -b "$src")
-  case "$mime" in
-    image/jpeg) ext=jpg ;;
-    image/png)  ext=png ;;
-    image/webp) ext=webp ;;
-    *) echo ""; return 2 ;;
-  esac
-
-  local cache="$HOME/.cache/colors/walls"
-  mkdir -p "$cache"
-  local filehash
-  filehash=$(printf "%s" "$src" | sha1sum | awk '{print $1}')
-  local link="$cache/$filehash.$ext"
-  [[ -e "$link" ]] || ln -s "$src" "$link"
-  printf "%s" "$link"
+  local src="$1"; [[ -f "$src" ]] || { echo ""; return 1; }
+  local mime ext; mime=$(file --mime-type -b "$src")
+  case "$mime" in image/jpeg) ext=jpg;; image/png) ext=png;; image/webp) ext=webp;; *) echo ""; return 2;; esac
+  local cache="$HOME/.cache/colors/walls"; mkdir -p "$cache"
+  local filehash; filehash=$(printf "%s" "$src" | sha1sum | awk '{print $1}')
+  local link="$cache/$filehash.$ext"; [[ -e "$link" ]] || ln -s "$src" "$link"; printf "%s" "$link"
 }
+WALL="$(pick_wall)"; [[ -z "$WALL" ]] && echo "No wallpaper image found under $COLOR_DIR/$color/wall"
 
-WALL="$(pick_wall)"
-if [[ -z "$WALL" ]]; then
-  echo "No wallpaper image found under $COLOR_DIR/$color/wall"
-fi
-
-# ── App theming ────────────────────────────────────────────────────────────────
-# kitty
+# ── Kitty ──────────────────────────────────────────────────────────────────────
 if d_exists "$CONFIG_DIR/kitty" && f_exists "$conf_file"; then
   cp "$conf_file" "$CONFIG_DIR/kitty/theme.conf" || true
   pkill -SIGUSR1 -x kitty 2>/dev/null || true
 fi
 
-# dunst
+# ── Dunst (kept; no-op if not running) ────────────────────────────────────────
 if f_exists "$CONFIG_DIR/dunst/dunstrc"; then
   sed -i -e "s/^ *background *= *.*/background = \"$background\"/g" \
          -e "s/^ *foreground *= *.*/foreground = \"$foreground\"/g" \
@@ -115,7 +89,7 @@ if f_exists "$CONFIG_DIR/dunst/dunstrc"; then
   pkill -HUP dunst 2>/dev/null || true
 fi
 
-# btop
+# ── btop ───────────────────────────────────────────────────────────────────────
 if f_exists "$CONFIG_DIR/btop/btop.conf"; then
   mkdir -p "$CONFIG_DIR/btop/themes"
   sed -i "s/color_theme = \".*\"/color_theme = \"$color\"/" "$CONFIG_DIR/btop/btop.conf" || true
@@ -135,7 +109,7 @@ theme[process_end]=$color1
 EOF
 fi
 
-# lf
+# ── lf ─────────────────────────────────────────────────────────────────────────
 mkdir -p "$CONFIG_DIR/lf"
 cat > "$CONFIG_DIR/lf/colors" << EOF
 di $color4
@@ -145,7 +119,7 @@ ex $color2
 or $color1
 EOF
 
-# bemenu
+# ── bemenu (legacy) ────────────────────────────────────────────────────────────
 if f_exists "$BEMENU_RC"; then
   sed -i -e "s/BG=\"[^\"]*\"/BG=\"$background\"/g" \
          -e "s/FG=\"[^\"]*\"/FG=\"$foreground\"/g" \
@@ -153,7 +127,7 @@ if f_exists "$BEMENU_RC"; then
          "$BEMENU_RC" || true
 fi
 
-# NvChad
+# ── NvChad: revert to original behavior (update + live reload) ────────────────
 get_nvchad_theme() {
   case "$1" in
     dracula) echo "chadracula" ;;
@@ -172,7 +146,7 @@ if f_exists "$NVCHAD_RC"; then
   fi
 fi
 
-# fish fzf colors
+# ── fish fzf colors ────────────────────────────────────────────────────────────
 mkdir -p "$CONFIG_DIR/fish/custom"
 cat > "$CONFIG_DIR/fish/custom/fzfcolors.fish" << EOF
 set -g color_background $background
@@ -187,7 +161,7 @@ set -g color_cyan $color6
 set -g color_white $color7
 EOF
 
-# ── BSPWM/polybar only if present (and not in Hyprland) ───────────────────────
+# ── BSPWM/polybar only if not in Hyprland ─────────────────────────────────────
 if ! "$IN_HYPR"; then
   if f_exists "$CONFIG_DIR/bspwm/config"; then
     sed -i -e "s/bspc config normal_border_color .*/bspc config normal_border_color \"$color0\"/g" \
@@ -204,27 +178,169 @@ if ! "$IN_HYPR"; then
   fi
 fi
 
-# ── Hyprland wallpapers with swww (handles extensionless files) ───────────────
+# ── Hyprland wallpapers (swww) ────────────────────────────────────────────────
 if "$IN_HYPR" && [[ -n "${WALL:-}" ]] && is_cmd swww; then
   swww query >/dev/null 2>&1 || (swww-daemon &>/dev/null & disown; sleep 0.3)
-
-  IMG="$(link_with_ext "$WALL")"
-  [[ -n "$IMG" ]] || IMG="$WALL"
-
+  IMG="$(link_with_ext "$WALL")"; [[ -n "$IMG" ]] || IMG="$WALL"
   if is_cmd jq; then
     hyprctl -j monitors | jq -r '.[].name' | while read -r mon; do
-      swww img -o "$mon" "$IMG" \
-        --transition-type grow \
-        --transition-duration 1 \
-        --transition-fps 60 || true
+      swww img -o "$mon" "$IMG" --transition-type grow --transition-duration 1 --transition-fps 60 || true
     done
   else
-    swww img "$IMG" \
-      --transition-type grow \
-      --transition-duration 1 \
-      --transition-fps 60 || true
+    swww img "$IMG" --transition-type grow --transition-duration 1 --transition-fps 60 || true
   fi
 fi
+
+# ── Waybar: colors.css + reload ────────────────────────────────────────────────
+waybar_write() {
+  local wdir="$HOME/.config/waybar"; mkdir -p "$wdir"
+  cat > "$wdir/colors.css" << CSS
+:root { --bg:${background}; --fg:${foreground}; --blue:${color4}; --cyan:${color6}; --red:${color1}; --yellow:${color3}; --green:${color2}; --magenta:${color5}; --black:${color0}; --radius:12px; }
+window#waybar { background: var(--bg); color: var(--fg); font-family: "JetBrains Mono", monospace; }
+#workspaces button { padding: 4px 8px; margin: 0 4px; border-radius: var(--radius); background: transparent; }
+#workspaces button.active { background: rgba(255,255,255,0.08); }
+#clock, #pulseaudio, #network, #battery, #tray { padding: 0 10px; margin: 0 6px; border-radius: var(--radius); background: rgba(0,0,0,0.1); }
+CSS
+  pkill -USR2 waybar 2>/dev/null || true
+}
+waybar_write
+
+# ── SwayNC: style.css + reload CSS ────────────────────────────────────────────
+swaync_write() {
+  local sdir="$HOME/.config/swaync"; mkdir -p "$sdir"
+  cat > "$sdir/style.css" << CSS
+* { font-family: "JetBrains Mono", monospace; color: ${foreground}; }
+.notification-row, .widget-title, .widget-mpris, .control-center { background-color: ${background}; border-radius: 14px; }
+.notification-row .notification, .widget-title > label { padding: 10px; }
+.notification.critical { border-left: 3px solid ${color1}; }
+progress, scale trough { background: ${color0}; }
+progress[value], scale highlight { background: ${color4}; }
+CSS
+  command -v swaync-client >/dev/null 2>&1 && swaync-client -rs >/dev/null 2>&1 || true
+}
+swaync_write
+
+# ── wlogout styling ────────────────────────────────────────────────────────────
+wlogout_write() {
+  local wdir="$HOME/.config/wlogout"; mkdir -p "$wdir"
+  cat > "$wdir/style.css" << CSS
+window { background-color: ${background}; }
+button { color: ${foreground}; background-color: rgba(0,0,0,0.15); border-radius: 18px; padding: 14px 20px; }
+button:hover { background-color: ${color4}; color: ${background}; }
+CSS
+}
+wlogout_write
+
+# ── VS Code: theme/customizations (live) ──────────────────────────────────────
+vscode_write() {
+  local vdir="$HOME/.config/Code/User"; local set="$vdir/settings.json"
+  mkdir -p "$vdir"; [[ -f "$set" ]] || echo '{}' > "$set"
+  local tmp; tmp="$(mktemp)"
+  jq --arg theme "Default Dark Modern" \
+     --arg bg "$background" --arg fg "$foreground" \
+     --arg blue "$color4" --arg red "$color1" --arg green "$color2" --arg yellow "$color3" --arg cyan "$color6" --arg magenta "$color5" \
+     '. + { "workbench.colorTheme": $theme,
+            "workbench.colorCustomizations": {
+              "editor.background": $bg, "editor.foreground": $fg,
+              "statusBar.background": $blue, "statusBar.foreground": $bg,
+              "activityBar.background": $bg,
+              "tab.activeBackground": $blue, "tab.activeForeground": $bg,
+              "titleBar.activeBackground": $bg,
+              "button.background": $blue, "button.foreground": $bg } }' \
+     "$set" > "$tmp" && mv "$tmp" "$set"
+}
+vscode_write
+
+# ── Sherlock CSS ───────────────────────────────────────────────────────────────
+sherlock_write() {
+  local sdir="$HOME/.config/sherlock"; mkdir -p "$sdir"
+  cat > "$sdir/main.css" << CSS
+:root { --bg:${background}; --fg:${foreground}; --acc:${color4}; --muted:${color0}; }
+window, .container, .tile, .search-entry { background-color: var(--bg); color: var(--fg); border-radius: 14px; }
+.tile:focus, .tile:hover { outline: 2px solid var(--acc); }
+.search-entry { border: 1px solid var(--muted); }
+.button-primary { background: var(--acc); color: var(--bg); border-radius: 10px; }
+CSS
+}
+sherlock_write
+
+# ── Hyprlock background sync ──────────────────────────────────────────────────
+hyprlock_sync_bg() {
+  local hlconf="$HOME/.config/hypr/hyprlock.conf"
+  [[ -f "$hlconf" && -n "${WALL:-}" ]] || return 0
+  local hash; hash=$(printf "%s" "$WALL" | sha1sum | awk '{print $1}')
+  local LNK="$HOME/.cache/colors/walls/$hash.jpg"
+  [[ -e "$LNK" ]] || LNK="$HOME/.cache/colors/walls/$hash.png"
+  [[ -e "$LNK" ]] || LNK="$HOME/.cache/colors/walls/$hash.webp"
+  [[ -e "$LNK" ]] || LNK="$WALL"
+  awk -v newpath="$LNK" '
+    BEGIN{inbg=0}
+    /^background[[:space:]]*\{/ {inbg=1}
+    inbg && /^[[:space:]]*path[[:space:]]*=/ {sub(/=.*/,"= " newpath); inbg=0}
+    {print}
+  ' "$hlconf" > "$hlconf.tmp" && mv "$hlconf.tmp" "$hlconf"
+}
+hyprlock_sync_bg
+
+# ── Wofi: update GTK @define-color values in style.css ────────────────────────
+wofi_update() {
+  local css="$HOME/.config/wofi/style.css"
+  [[ -f "$css" ]] || return 0
+  sed -i -E \
+    -e "s|(@define-color[[:space:]]+bg[[:space:]]+).*;|\\1${background};|g" \
+    -e "s|(@define-color[[:space:]]+fg[[:space:]]+).*;|\\1${foreground};|g" \
+    -e "s|(@define-color[[:space:]]+acc[[:space:]]+).*;|\\1${color4};|g" \
+    -e "s|(@define-color[[:space:]]+muted[[:space:]]+).*;|\\1${color0};|g" \
+    -e "s|(@define-color[[:space:]]+hl[[:space:]]+).*;|\\1${color4};|g" \
+    "$css"
+}
+wofi_update
+
+# ── Zen (prefer Flatpak) userChrome.css in default profile ────────────────────
+zen_write() {
+  local cand=(
+    "$HOME/.var/app/app.zen_browser.zen/.zen"
+    "$HOME/.var/app/io.github.zen_browser.zen/.zen"
+    "$HOME/.zen"
+  )
+  local base=""
+  for c in "${cand[@]}"; do [[ -d "$c" ]] && { base="$c"; break; }; done
+  [[ -n "$base" ]] || return 0
+
+  local ini="$base/profiles.ini"
+  local profdir=""
+
+  if [[ -f "$ini" ]]; then
+    profdir=$(awk -F= '
+      $1 ~ /^\[Profile/ { sec=$0; path=""; def=0 }
+      $1=="Path"    { path=$2 }
+      $1=="Default" { def=$2 }
+      /^\[/ && NR>1 { if(def==1 && path!="") print path; path=""; def=0 }
+      END { if(def==1 && path!="") print path }
+    ' "$ini" | head -n1)
+  fi
+
+  if [[ -z "$profdir" ]]; then
+    profdir=$(ls -td "$base"/*/ 2>/dev/null | head -n1)
+  else
+    [[ -d "$base/$profdir" ]] && profdir="$base/$profdir"
+  fi
+
+  [[ -n "$profdir" && -d "$profdir" ]] || return 0
+
+  mkdir -p "$profdir/chrome"
+  cat > "$profdir/chrome/userChrome.css" << CSS
+:root {
+  --bg:${background}; --fg:${foreground};
+  --acc:${color4}; --muted:${color0};
+  --red:${color1}; --green:${color2}; --yellow:${color3}; --cyan:${color6}; --magenta:${color5};
+}
+#TabsToolbar, #toolbar-menubar { background-color: var(--bg) !important; color: var(--fg) !important; }
+.tab-background[selected="true"] { background-color: var(--acc) !important; }
+.tab-label[selected="true"] { color: var(--bg) !important; }
+CSS
+}
+zen_write
 
 # ── Done ───────────────────────────────────────────────────────────────────────
 is_cmd notify-send && notify-send "Theme applied" "$color" || true

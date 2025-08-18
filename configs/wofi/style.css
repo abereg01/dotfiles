@@ -1,0 +1,44 @@
+/* GTK CSS (no CSS variables) */
+@define-color bg    #1e1e2e;
+@define-color fg    #cdd6f4;
+@define-color acc   #89b4fa;
+@define-color muted #11111b;
+@define-color hl    #89b4fa;
+
+* {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12pt;
+}
+
+window {
+  margin: 0px;
+  border: 2px solid @acc;
+  background-color: @bg;
+  border-radius: 12px;
+}
+
+#outer-box { margin: 10px; background-color: @bg; }
+
+#input {
+  margin: 10px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid @muted;
+  background-color: @bg;
+  color: @fg;
+}
+
+#inner-box { margin: 6px; background-color: @bg; }
+#scroll { margin: 0px; }
+
+#entry {
+  padding: 6px 10px;
+  margin: 4px 6px;
+  border-radius: 8px;
+}
+
+#entry:selected { background-color: @hl; }
+#text { color: @fg; }
+#text:selected { color: @bg; }
+#img { margin-right: 8px; }
+

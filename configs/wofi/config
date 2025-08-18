@@ -1,0 +1,11 @@
+allow_images=true
+allow_markup=true
+width=800
+height=420
+prompt=Search…
+insensitive=true
+lines=12
+term=kitty
+no_actions=false
+style=~/.config/wofi/style.css
+
